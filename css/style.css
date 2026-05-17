@@ -453,7 +453,7 @@ input, textarea, select { font-family: inherit; }
   border: none;
   pointer-events: none;
   opacity: 0;
-  animation: ytReveal 0.8s ease 1.8s forwards;
+  animation: ytReveal 0.6s ease 3s forwards;
 }
 @keyframes ytReveal { to { opacity: 1; } }
 

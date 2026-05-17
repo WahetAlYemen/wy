@@ -8,11 +8,11 @@
   <meta property="og:description" content="قائمة طعام واحة اليمن — مندي، مظبي، مشويات مصرية، دجاج، أسماك، حلويات، مشروبات وأكثر.">
   <meta property="og:type" content="restaurant">
   <meta property="og:url" content="https://wahetalyemen.github.io/wy/menu.html">
-  <meta property="og:image" content="https://wahetalyemen.github.io/wy/photos/updated%20shap%20of%20the%20brand.jpg">
+  <meta property="og:image" content="https://wahetalyemen.github.io/wy/photos/5.jpeg">
   <meta property="og:image:alt" content="واحة اليمن - مطعم المأكولات اليمنية والمصرية والخليجية">
   <meta property="og:site_name" content="واحة اليمن - Wahet Al Yemen">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:image" content="https://wahetalyemen.github.io/wy/photos/updated%20shap%20of%20the%20brand.jpg">
+  <meta name="twitter:image" content="https://wahetalyemen.github.io/wy/photos/5.jpeg">
   <title>القائمة — واحة اليمن</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -202,6 +202,42 @@
     .chicken-item-photo-inner svg { width: 26px; height: 26px; }
     .chicken-item-text { padding: 13px 14px; }
     .chicken-item-text h4 { font-size: 0.9rem; font-weight: 800; color: var(--brown-dark); margin-bottom: 10px; }
+
+    /* Tray deals grid — matches fish/chicken card style */
+    .tray-deals-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 16px;
+    }
+    .menu-tray-card {
+      background: var(--off-white);
+      border: 1.5px solid var(--gold-border);
+      border-radius: 14px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.25s, box-shadow 0.25s;
+    }
+    .menu-tray-card:hover { border-color: var(--gold); box-shadow: 0 4px 18px rgba(200,150,12,0.14); }
+    .menu-tray-card-slot {
+      aspect-ratio: 4 / 3;
+      background: linear-gradient(135deg, rgba(200,150,12,0.06) 0%, rgba(44,21,0,0.2) 100%);
+      border-bottom: 1px dashed rgba(200,150,12,0.28);
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden; position: relative; flex-shrink: 0;
+      color: rgba(200,150,12,0.4); font-size: 0.67rem; font-weight: 600;
+      flex-direction: column; gap: 6px;
+    }
+    .menu-tray-card-slot svg { width: 28px; height: 28px; }
+    .menu-tray-card-slot img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+    .menu-tray-card-body { padding: 14px 16px; flex: 1; display: flex; flex-direction: column; gap: 4px; }
+    .menu-tray-card-name { font-size: 0.93rem; font-weight: 800; color: var(--brown-dark); }
+    .menu-tray-card-meta { display: flex; align-items: center; justify-content: space-between; margin-top: 2px; }
+    .menu-tray-card-persons { font-size: 0.75rem; color: var(--text-light); background: rgba(200,150,12,0.1); border-radius: 20px; padding: 2px 10px; }
+    .menu-tray-card-price { font-size: 1rem; font-weight: 800; color: var(--gold-dark); }
+    .menu-tray-card-contents { font-size: 0.76rem; color: var(--text-mid); line-height: 1.6; margin-top: 8px; border-top: 1px dashed rgba(200,150,12,0.18); padding-top: 8px; }
+    @media (max-width: 540px) { .tray-deals-grid { grid-template-columns: 1fr 1fr; gap: 10px; } }
+    @media (max-width: 360px) { .tray-deals-grid { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -210,7 +246,7 @@
   <nav class="navbar scrolled" id="navbar">
     <div class="container nav-container">
       <a href="index.html" class="nav-logo">
-        <img src="photos/updated shap of the brand.jpg" alt="واحة اليمن" class="logo-img">
+        <img src="brand_assets/263050197_102917078909985_2041387502624040699_n (1).jpg" alt="واحة اليمن" class="logo-img">
         <div class="logo-text">
           <span class="logo-name" data-en="Wahet Al Yemen">واحة اليمن</span>
           <span class="logo-sub" data-en="Yemeni · Egyptian · Gulf">للمأكولات اليمنية والمصرية والخليجية</span>
@@ -350,7 +386,7 @@
 
         <div class="menu-photo-grid" style="margin-bottom:20px;">
           <div class="menu-photo-card">
-            <div class="menu-photo-card-slot"><div class="menu-photo-card-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div><img src="photos/نفر لحم مندي.jpeg" alt="نفر لحم مندي" loading="lazy"></div>
+            <div class="menu-photo-card-slot"><div class="menu-photo-card-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div><img src="photos/مندي1.jpg" alt="نفر لحم مندي" loading="lazy"></div>
             <div class="menu-photo-card-body"><div class="menu-photo-card-name" data-en="Per Person Mandi">نفر لحم مندي</div><div class="menu-photo-card-price">475 ج</div></div>
           </div>
         </div>
@@ -753,68 +789,71 @@
           <p class="menu-section-sub" data-en='"Wahet trays — bringing everyone together on one table"'>"صواني الواحة تجمع كل الرأي زوناي على سُفرة واحدة"</p>
         </div>
 
-        <div class="menu-deal-card">
-          <div style="width:150px;aspect-ratio:1/1;overflow:hidden;border-radius:10px;margin-bottom:14px;"><img src="photos/صينية الاصدقاء.jpeg" alt="صينية الأصدقاء" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
-          <div class="menu-deal-header">
-            <span class="menu-deal-name" data-en="Friends Tray - 3 Persons">صينية الأصدقاء — 3 أفراد</span>
-            <span class="menu-deal-persons" data-en="3 Persons">3 أفراد</span>
-            <span class="menu-deal-price">1,760 ج</span>
-          </div>
-          <p class="menu-deal-contents" data-en="Choice of Tasweya: Tis Mandi + kilo kofta klandoz + 3 + sauces">ثمن تيس مندي + فرخة التسوية من اختيارك + كيلو كفتة كلندوز + أرز + 3 سلطة + 3 صوص سحاوق</p>
-        </div>
+        <div class="tray-deals-grid">
 
-        <div class="menu-deal-card">
-          <div class="menu-deal-header">
-            <span class="menu-deal-name" data-en="Family Tray - 4 Persons">صينية لمة العيلة — 4 أفراد</span>
-            <span class="menu-deal-persons" data-en="4 Persons">4 أفراد</span>
-            <span class="menu-deal-price">1,890 ج</span>
+          <div class="menu-tray-card">
+            <div class="menu-tray-card-slot"><img src="photos/صينية الاصدقاء.jpeg" alt="صينية الأصدقاء" loading="lazy"></div>
+            <div class="menu-tray-card-body">
+              <div class="menu-tray-card-name" data-en="Friends Tray">صينية الأصدقاء</div>
+              <div class="menu-tray-card-meta"><span class="menu-tray-card-persons" data-en="3 Persons">3 أفراد</span><span class="menu-tray-card-price">1,760 ج</span></div>
+              <div class="menu-tray-card-contents">ثمن تيس مندي + فرخة التسوية من اختيارك + كيلو كفتة كلندوز + أرز + 3 سلطة + 3 صوص سحاوق</div>
+            </div>
           </div>
-          <p class="menu-deal-contents" data-en="Tis mandi + kilo kofta klandoz + 8 pieces + 4 sambousa + rice + 4 sauces">ربع تيس مندي + نصف كيلو كفتة كلندوز + 8 قطعة مبار + 4 قطعة سمبوسك لحم + أرز + 4 سلطة + 4 صوص سحاوق</p>
-        </div>
 
-        <div class="menu-deal-card">
-          <div class="menu-deal-header">
-            <span class="menu-deal-name" data-en="Monsters Tray - 8 Persons">صينية الوحوش — 8 أفراد</span>
-            <span class="menu-deal-persons" data-en="8 Persons">8 أفراد</span>
-            <span class="menu-deal-price">4,190 ج</span>
+          <div class="menu-tray-card">
+            <div class="menu-tray-card-slot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div>
+            <div class="menu-tray-card-body">
+              <div class="menu-tray-card-name" data-en="Family Tray">صينية لمة العيلة</div>
+              <div class="menu-tray-card-meta"><span class="menu-tray-card-persons" data-en="4 Persons">4 أفراد</span><span class="menu-tray-card-price">1,890 ج</span></div>
+              <div class="menu-tray-card-contents">ربع تيس مندي + نصف كيلو كفتة كلندوز + 8 قطعة مبار + 4 قطعة سمبوسك لحم + أرز + 4 سلطة + 4 صوص سحاوق</div>
+            </div>
           </div>
-          <p class="menu-deal-contents" data-en="Half tis mandi + 2 tasweya + kilo kofta klandoz + 6 kofta pieces + 6 sambousa + 5 ribs + 8 sauces">نصف تيس مندي + 2 فرخة التسوية من اختيارك + كيلو كفتة كلندوز + 6 قطعة + 6 قطعة سمبوسك لحم + 5 قطعة مبار + أرز + 8 سلطة + 8 صوص سحاوق</p>
-        </div>
 
-        <div class="menu-deal-card">
-          <div class="menu-deal-header">
-            <span class="menu-deal-name" data-en="Wahet Al Yemen Tray - 10 Persons">صينية واحة اليمن — 10 أفراد</span>
-            <span class="menu-deal-persons" data-en="10 Persons">10 أفراد</span>
-            <span class="menu-deal-price">5,040 ج</span>
+          <div class="menu-tray-card">
+            <div class="menu-tray-card-slot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div>
+            <div class="menu-tray-card-body">
+              <div class="menu-tray-card-name" data-en="Monsters Tray">صينية الوحوش</div>
+              <div class="menu-tray-card-meta"><span class="menu-tray-card-persons" data-en="8 Persons">8 أفراد</span><span class="menu-tray-card-price">4,190 ج</span></div>
+              <div class="menu-tray-card-contents">نصف تيس مندي + 2 فرخة التسوية + كيلو كفتة كلندوز + 6 قطعة + 6 سمبوسك لحم + 5 مبار + أرز + 8 سلطة + 8 صوص سحاوق</div>
+            </div>
           </div>
-          <p class="menu-deal-contents" data-en="Full Yemeni tray experience — nusf tis mandi + full tasweya + kilo kofta + sausage + 5 sambousa + 5 ribs + 10 sauces">نصف تيس مندي + فرخة التسوية من اختيارك + كيلو شيش طاووق + كفتة كلندوز + نصف كيلو سجق ضاني + 2 حواوشي + 5 قطعة سمبوسك جبنة + 5 قطعة سمبوسك لحم + 8 قطعة مبار + أرز + 10 سلطة + 10 طحينة + 10 صوص سحاوق</p>
-        </div>
 
-        <div class="menu-deal-card">
-          <div class="menu-deal-header">
-            <span class="menu-deal-name" data-en="Oasis Tray x Zayed+3 - 3 Persons">صينية الواحة × زايد+3 — 3 أفراد</span>
-            <span class="menu-deal-persons" data-en="3 Persons">3 أفراد</span>
-            <span class="menu-deal-price">1,540 ج</span>
+          <div class="menu-tray-card">
+            <div class="menu-tray-card-slot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div>
+            <div class="menu-tray-card-body">
+              <div class="menu-tray-card-name" data-en="Wahet Al Yemen Tray">صينية واحة اليمن</div>
+              <div class="menu-tray-card-meta"><span class="menu-tray-card-persons" data-en="10 Persons">10 أفراد</span><span class="menu-tray-card-price">5,040 ج</span></div>
+              <div class="menu-tray-card-contents">نصف تيس مندي + فرخة التسوية + كيلو شيش طاووق + كفتة كلندوز + نصف كيلو سجق ضاني + 2 حواوشي + 5 سمبوسك جبنة + 5 سمبوسك لحم + 8 مبار + أرز + 10 سلطة + 10 طحينة + 10 صوص سحاوق</div>
+            </div>
           </div>
-          <p class="menu-deal-contents" data-en="Suwir mandi + shish tawooq + kofta + 2 pigeons + rice + sauces">سوير مندي + نص شيش طاووق + كفتة + 2 فرد حمام (محشي/مشوي) + مشكل محاشي صغير + أرز + 3 سلطة + 3 صوص سحاوق</p>
-        </div>
 
-        <div class="menu-deal-card">
-          <div class="menu-deal-header">
-            <span class="menu-deal-name" data-en="Teachers Tray - 6 Persons">صينية المعلمين — 6 أفراد</span>
-            <span class="menu-deal-persons" data-en="6 Persons">6 أفراد</span>
-            <span class="menu-deal-price">3,355 ج</span>
+          <div class="menu-tray-card">
+            <div class="menu-tray-card-slot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div>
+            <div class="menu-tray-card-body">
+              <div class="menu-tray-card-name" data-en="Oasis Tray × Zayed+3">صينية الواحة × زايد+3</div>
+              <div class="menu-tray-card-meta"><span class="menu-tray-card-persons" data-en="3 Persons">3 أفراد</span><span class="menu-tray-card-price">1,540 ج</span></div>
+              <div class="menu-tray-card-contents">سوير مندي + نص شيش طاووق + كفتة + 2 فرد حمام (محشي/مشوي) + مشكل محاشي صغير + أرز + 3 سلطة + 3 صوص سحاوق</div>
+            </div>
           </div>
-          <p class="menu-deal-contents" data-en="Kilo kofta + kilo shish + 4 pigeon + 8 mmbbar + 6 sambousa + 6 sauces">كيلو كفتة + كيلو شيش + 4 حمام كبير + 8 ممبار + 6 سمبوسك جبنة + أرز + 6 سلطة + 6 صوص سحاوق</p>
-        </div>
 
-        <div class="menu-deal-card">
-          <div class="menu-deal-header">
-            <span class="menu-deal-name" data-en="Captain's Tray - 10 Persons">صينية القبطان — 10 أفراد</span>
-            <span class="menu-deal-persons" data-en="10 Persons">10 أفراد</span>
-            <span class="menu-deal-price">4,500 ج</span>
+          <div class="menu-tray-card">
+            <div class="menu-tray-card-slot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div>
+            <div class="menu-tray-card-body">
+              <div class="menu-tray-card-name" data-en="Teachers Tray">صينية المعلمين</div>
+              <div class="menu-tray-card-meta"><span class="menu-tray-card-persons" data-en="6 Persons">6 أفراد</span><span class="menu-tray-card-price">3,355 ج</span></div>
+              <div class="menu-tray-card-contents">كيلو كفتة + كيلو شيش + 4 حمام كبير + 8 ممبار + 6 سمبوسك جبنة + أرز + 6 سلطة + 6 صوص سحاوق</div>
+            </div>
           </div>
-          <p class="menu-deal-contents" data-en="2 kg Jumbo Gambari grilled + 2 dierk + 1 bouri + kilo potatoes + rice + sauces">2 ك جمبري جامبو مشوي + 2 ديرك مشوي + 1 ك سمك فيليه مقلي + بوري مشوي + 1 ك بطاطس أعشاب + رز أبيض + 5 صوص ليمون باتر + 5 صوص سحاوق</p>
+
+          <div class="menu-tray-card">
+            <div class="menu-tray-card-slot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div>
+            <div class="menu-tray-card-body">
+              <div class="menu-tray-card-name" data-en="Captain's Tray">صينية القبطان</div>
+              <div class="menu-tray-card-meta"><span class="menu-tray-card-persons" data-en="10 Persons">10 أفراد</span><span class="menu-tray-card-price">4,500 ج</span></div>
+              <div class="menu-tray-card-contents">2 ك جمبري جامبو مشوي + 2 ديرك مشوي + 1 ك سمك فيليه مقلي + بوري مشوي + 1 ك بطاطس أعشاب + رز أبيض + 5 صوص ليمون باتر + 5 صوص سحاوق</div>
+            </div>
+          </div>
+
         </div>
 
       </div>
@@ -1190,7 +1229,7 @@
     <div class="container footer-content">
       <div class="footer-main">
         <div class="footer-brand">
-          <img src="photos/updated shap of the brand.jpg" alt="واحة اليمن" class="footer-logo">
+          <img src="brand_assets/263050197_102917078909985_2041387502624040699_n (1).jpg" alt="واحة اليمن" class="footer-logo">
           <p class="footer-tagline" data-en="Live the Yemeni Experience">عيش التجربة اليمنية</p>
           <p class="footer-desc" data-en="Yemeni · Egyptian · Gulf Cuisine">للمأكولات اليمنية والمصرية والخليجية</p>
         </div>
