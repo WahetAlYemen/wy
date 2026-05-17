@@ -423,7 +423,8 @@ input, textarea, select { font-family: inherit; }
   display: flex;
   align-items: center;
   overflow: hidden;
-  background: #1A0A02; /* fallback when no video file */
+  /* Photo shows behind video while it loads, and on iOS if video pauses */
+  background: #1A0A02 url('../photos/5.jpeg') center 30% / cover no-repeat;
 }
 
 .hero-bg {
@@ -1883,9 +1884,33 @@ body.en .about-grid { direction: ltr; }
    MOBILE IMPROVEMENTS
 ======================== */
 
-/* Fix 100vh bug where mobile browser chrome overlaps the hero */
+/* ── Hero mobile: fix height + stronger overlay + tighter content ── */
 @media (max-width: 768px) {
   .hero { min-height: 100vh; min-height: 100svh; }
+
+  /* Stronger dark overlay so text is readable over the photo/video */
+  .hero-bg::before {
+    background:
+      radial-gradient(ellipse 80% 55% at 50% 0%, rgba(139,90,43,0.28) 0%, transparent 65%),
+      linear-gradient(160deg, rgba(16,6,0,0.75) 0%, rgba(32,14,0,0.7) 50%, rgba(16,6,0,0.75) 100%);
+  }
+
+  /* Tighter hero content spacing on mobile */
+  .hero-badge { font-size: 0.71rem; padding: 5px 16px; margin-bottom: 14px; letter-spacing: 0.08em; }
+  .hero-title { margin-bottom: 10px; }
+  .hero-tagline { margin-bottom: 22px; font-size: clamp(1.1rem, 4.5vw, 1.5rem); }
+  .hero-actions { gap: 10px; margin-bottom: 24px; }
+  .hero-actions .btn-lg { padding: 13px 28px; font-size: 0.95rem; min-width: 200px; }
+  .hero-phones { gap: 12px; }
+  .hero-phone { font-size: 0.86rem; }
+  /* Hide scroll indicator — saves space on mobile */
+  .hero-scroll-indicator { display: none; }
+}
+
+@media (max-width: 480px) {
+  /* Full-width CTA buttons on small phones */
+  .hero-actions { flex-direction: column; align-items: center; }
+  .hero-actions .btn { width: min(100%, 270px); justify-content: center; }
 }
 
 @media (max-width: 900px) {

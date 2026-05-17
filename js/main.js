@@ -474,6 +474,28 @@ function initSlideshows() {
 }
 
 // ========================
+// ========================
+// HERO VIDEO (iOS FIX)
+// ========================
+function initHeroVideo() {
+  const video = document.querySelector('.hero-yt-wrap video');
+  if (!video) return;
+
+  // iOS requires muted set via JS property, not just attribute
+  video.muted = true;
+
+  const tryPlay = () => {
+    if (video.paused) video.play().catch(() => {});
+  };
+
+  tryPlay();
+  video.addEventListener('canplay', tryPlay, { once: true });
+  // Last resort: play on first user touch (iOS Low Power Mode)
+  ['touchstart', 'touchend'].forEach(e =>
+    document.addEventListener(e, tryPlay, { once: true, passive: true })
+  );
+}
+
 // INIT
 // ========================
 document.addEventListener('DOMContentLoaded', () => {
@@ -491,6 +513,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  initHeroVideo();
   initNavbar();
   initMobileMenu();
   initScrollAnimations();
