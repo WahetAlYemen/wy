@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Get-ChildItem -Recurse \"d:\\\\Claude AI\\\\Website\" -File | Select-Object Name, DirectoryName, @{N=\"KB\";E={[math]::Round\\($_.Length/1KB,1\\)}})",
+      "PowerShell(Get-ChildItem \"d:\\\\Claude AI\\\\Website\" -Recurse | Select-Object Name, @{N=\"Size\";E={$_.Length}})"
+    ]
+  }
+}

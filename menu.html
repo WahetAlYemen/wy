@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="قائمة طعام واحة اليمن — مندي، مظبي، مشويات مصرية، دجاج، أسماك، حلويات، مشروبات وأكثر.">
+  <title>القائمة — واحة اليمن</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* Menu page extra spacing */
+    .menu-content .container { padding-top: 0; }
+    .menu-section + .menu-section { margin-top: 0; }
+
+    .menu-hero-note {
+      background: var(--gold-dim);
+      border: 1px solid var(--gold-border);
+      border-radius: 10px;
+      padding: 14px 20px;
+      font-size: 0.84rem;
+      color: var(--text-mid);
+      margin-bottom: 32px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .menu-hero-note svg { width: 18px; height: 18px; color: var(--gold); flex-shrink: 0; margin-top: 1px; }
+
+    .menu-deal-card {
+      background: var(--gold-dim);
+      border: 1px solid var(--gold-border);
+      border-radius: 14px;
+      padding: 22px 24px;
+      margin-bottom: 16px;
+      transition: all 0.25s;
+    }
+    .menu-deal-card:hover { border-color: var(--gold); background: rgba(200,150,12,0.08); }
+
+    .menu-deal-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+
+    .menu-deal-name {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--brown-dark);
+    }
+
+    .menu-deal-persons {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--gold-dark);
+      background: var(--gold-dim);
+      border: 1px solid var(--gold-border);
+      padding: 3px 12px;
+      border-radius: 100px;
+      white-space: nowrap;
+    }
+
+    .menu-deal-price {
+      font-size: 1.2rem;
+      font-weight: 900;
+      color: var(--gold);
+      white-space: nowrap;
+    }
+
+    .menu-deal-contents {
+      font-size: 0.84rem;
+      color: var(--text-mid);
+      line-height: 1.7;
+    }
+
+    .price-tag {
+      font-weight: 700;
+      color: var(--gold-dark);
+    }
+
+    /* Drinks grid */
+    .drinks-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+
+    @media (max-width: 600px) {
+      .drinks-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* Chicken table */
+    .chicken-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    .chicken-item {
+      background: var(--off-white);
+      border: 1px solid var(--gold-border);
+      border-radius: 10px;
+      padding: 16px;
+    }
+    .chicken-item h4 { font-size: 0.9rem; font-weight: 800; color: var(--brown-dark); margin-bottom: 10px; }
+    .chicken-price-row { display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-mid); padding: 4px 0; border-bottom: 1px solid rgba(200,150,12,0.1); }
+    .chicken-price-row:last-child { border-bottom: none; }
+    .chicken-price-row span:last-child { font-weight: 700; color: var(--gold-dark); }
+
+    @media (max-width: 600px) {
+      .chicken-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Fish note */
+    .fish-note {
+      font-size: 0.85rem;
+      font-style: italic;
+      color: var(--text-light);
+      padding: 12px 0;
+      border-top: 1px dashed var(--gold-border);
+      margin-top: 8px;
+    }
+
+    /* Bakery grid */
+    .bakery-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px;
+    }
+    @media (max-width: 600px) { .bakery-grid { grid-template-columns: 1fr; } }
+
+    .menu-section-note {
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--text-light);
+      margin-top: 12px;
+      display: block;
+    }
+
+    /* ====== MENU PHOTO CARDS ====== */
+    .menu-photo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(168px, 1fr));
+      gap: 14px;
+      margin-bottom: 8px;
+    }
+    .menu-photo-card {
+      background: var(--gold-dim);
+      border: 1px solid var(--gold-border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .menu-photo-card:hover { border-color: var(--gold); transform: translateY(-2px); }
+    .menu-photo-card-slot {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      background: linear-gradient(135deg, rgba(200,150,12,0.06) 0%, rgba(44,21,0,0.22) 100%);
+      border-bottom: 1px dashed rgba(200,150,12,0.28);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+    .menu-photo-card-slot img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .menu-photo-card-slot-inner {
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      color: rgba(200,150,12,0.4); font-size: 0.67rem; font-weight: 600; pointer-events: none;
+    }
+    .menu-photo-card-slot-inner svg { width: 26px; height: 26px; }
+    .menu-photo-card-body { padding: 11px 13px; }
+    .menu-photo-card-name { font-size: 0.86rem; font-weight: 700; color: var(--text-head); line-height: 1.35; margin-bottom: 5px; }
+    .menu-photo-card-price { font-size: 0.82rem; font-weight: 700; color: var(--gold-dark); }
+
+    /* Chicken item photo slot */
+    .chicken-item { overflow: hidden; padding: 0; }
+    .chicken-item-photo {
+      width: 100%; aspect-ratio: 1 / 1;
+      background: linear-gradient(135deg, rgba(200,150,12,0.06) 0%, rgba(44,21,0,0.22) 100%);
+      border-bottom: 1px dashed rgba(200,150,12,0.28);
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden; position: relative;
+    }
+    .chicken-item-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .chicken-item-photo-inner {
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      color: rgba(200,150,12,0.4); font-size: 0.67rem; font-weight: 600; pointer-events: none;
+    }
+    .chicken-item-photo-inner svg { width: 26px; height: 26px; }
+    .chicken-item-text { padding: 13px 14px; }
+    .chicken-item-text h4 { font-size: 0.9rem; font-weight: 800; color: var(--brown-dark); margin-bottom: 10px; }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar scrolled" id="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="nav-logo">
+        <img src="brand_assets/263050197_102917078909985_2041387502624040699_n (1).jpg" alt="واحة اليمن" class="logo-img">
+        <div class="logo-text">
+          <span class="logo-name" data-en="Wahet Al Yemen">واحة اليمن</span>
+          <span class="logo-sub" data-en="Yemeni · Egyptian · Gulf">للمأكولات اليمنية والمصرية والخليجية</span>
+        </div>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link" data-en="Home">الرئيسية</a></li>
+        <li><a href="menu.html" class="nav-link active" data-en="Menu">القائمة</a></li>
+        <li><a href="branches.html" class="nav-link" data-en="Branches">الفروع</a></li>
+        <li><a href="index.html#about" class="nav-link" data-en="About">عن الواحة</a></li>
+        <li><a href="index.html#contact" class="nav-link" data-en="Contact">تواصل معنا</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="lang-toggle" id="langToggle">EN</button>
+        <a href="tel:01112223232" class="nav-cta" data-en="Order Now" data-order-modal>اطلب الآن</a>
+        <button class="hamburger" id="hamburger" aria-label="القائمة">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <ul class="mobile-nav-links">
+        <li><a href="index.html" data-en="Home">الرئيسية</a></li>
+        <li><a href="menu.html" data-en="Menu">القائمة</a></li>
+        <li><a href="branches.html" data-en="Branches">الفروع</a></li>
+      </ul>
+      <div class="mobile-nav-cta">
+        <a href="tel:01112223232" class="btn btn-gold">01112223232 المهندسين</a>
+        <a href="tel:01118883232" class="btn btn-outline">01118883232 الشيخ زايد</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <div class="page-hero-content container">
+      <div class="page-hero-breadcrumb">
+        <a href="index.html" data-en="Home">الرئيسية</a>
+        <span>/</span>
+        <span data-en="Menu">القائمة</span>
+      </div>
+      <h1 data-en="Our Menu">قائمتنا</h1>
+      <p data-en="A complete journey through Yemeni, Egyptian and Gulf cuisine.">رحلة كاملة في المطبخ اليمني والمصري والخليجي.</p>
+    </div>
+  </div>
+
+  <!-- MENU CATEGORY NAV -->
+  <nav class="menu-nav" aria-label="أقسام القائمة">
+    <div class="menu-nav-inner">
+      <button class="menu-tab" data-target="sec-salads" data-en="Salads & Starters">السلطات والمقبلات</button>
+      <button class="menu-tab" data-target="sec-mandi" data-en="Mandi Meats">اللحم المندي</button>
+      <button class="menu-tab" data-target="sec-meats" data-en="Authentic Meats">اللحوم الأصيلة</button>
+      <button class="menu-tab" data-target="sec-grills" data-en="Egyptian Grills">المشويات المصرية</button>
+      <button class="menu-tab" data-target="sec-chicken" data-en="Chicken">الدجاج</button>
+      <button class="menu-tab" data-target="sec-fish" data-en="Fish">الأسماك</button>
+      <button class="menu-tab" data-target="sec-bakery" data-en="Bakery & Soups">المخبازة والشوربة</button>
+      <button class="menu-tab" data-target="sec-trays" data-en="Tray Deals">عروض الصواني</button>
+      <button class="menu-tab" data-target="sec-meals" data-en="Meal Deals">عروض الوجبات</button>
+      <button class="menu-tab" data-target="sec-desserts" data-en="Desserts">الحلويات</button>
+      <button class="menu-tab" data-target="sec-drinks" data-en="Drinks">المشروبات</button>
+    </div>
+  </nav>
+
+  <!-- MENU CONTENT -->
+  <div class="menu-content">
+    <div class="container">
+
+      <div class="menu-hero-note">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <span data-en="All prices include service · Live band provided free in the dining hall · Prices shown are for Mohandessin branch. Sheikh Zayed branch adds 14% VAT.">الأسعار شاملة الخدمة · الفرقة الموسيقية مجاناً في الصالة · الأسعار المعروضة لفرع المهندسين. فرع الشيخ زايد يُضاف عليه 14% ضريبة قيمة مضافة.</span>
+      </div>
+
+      <!-- ======== SALADS & STARTERS ======== -->
+      <div class="menu-section" id="sec-salads">
+        <div class="menu-section-header">
+          <h2 class="menu-section-title" data-en="Salads & Cold Appetizers">السلطات والمقبلات الباردة</h2>
+        </div>
+
+        <div class="menu-items-grid">
+          <div class="menu-item"><span class="menu-item-name" data-en="Royal Oasis Salad">سلطة واحة اليمن الملكية</span><span class="menu-item-price">150 ج</span></div>
+          <div class="menu-item"><span class="menu-item-name" data-en="Mixed Salads">ميكس سلطات</span><span class="menu-item-price">100 ج</span></div>
+          <div class="menu-item"><span class="menu-item-name" data-en="Greek Salad">سلطة جريك</span><span class="menu-item-price">40 ج</span></div>
+          <div class="menu-item"><span class="menu-item-name" data-en="Fattoush">فتوش</span><span class="menu-item-price">40 ج</span></div>
+          <div class="menu-item"><span class="menu-item-name" data-en="Caesar Salad">سلطة سيزر</span><span class="menu-item-price">55 ج</span></div>
+          <div class="menu-item"><span class="menu-item-name" data-en="Caesar Salad with Chicken">سلطة سيزر بالفراخ</span><span class="menu-item-price">130 ج</span></div>
+          <div class="menu-item"><span class="menu-item-name" data-en="Small Green Salad">سلطة خضراء صغيرة</span><span class="menu-item-price">15 ج</span></div>
+          <div class="menu-item"><span class="menu-item-name" data-en="Large Green Salad">سلطة خضراء كبيرة</span><span class="menu-item-price">25 ج</span></div>
+          <div class="menu-item"><span class="menu-item-name" data-en="Green Salad with Orange">سلطة خضراء شرائح</span><span class="menu-item-price">25 ج</span></div>
+          <div class="menu-item"><span class="menu-item-name" data-en="Parsley Salad">سلطة جرجير</span><span class="menu-item-price">25 ج</span></div>
+          <div class="menu-item"><span class="menu-item-name" data-en="Coleslaw">كولسلو</span><span class="menu-item-price">70 ج</span></div>
+          <div class="menu-item"><span class="menu-item-name" data-en="Labneh Zaatar">لبنة زعتر</span><span class="menu-item-price">65 ج</span></div>
+          <div class="menu-item"><span class="menu-item-name" data-en="Tahineh">طحينة</span><span class="menu-item-price">35 ج</span></div>
+          <div class="menu-item"><span class="menu-item-name" data-en="Baba Ganoush">بابا غنوج</span><span class="menu-item-price">35 ج</span></div>
+          <div class="menu-item"><span class="menu-item-name" data-en="Hummus">حمص</span><span class="menu-item-price">35 ج</span></div>
+          <div class="menu-item"><span class="menu-item-name" data-en="Hummus with Meat">حمص بيروتي</span><span class="menu-item-price">45 ج</span></div>
+          <div class="menu-item"><span class="menu-item-name" data-en="Fattah (Small)">عشار مغير</span><span class="menu-item-price">30 ج</span></div>
+          <div class="menu-item"><span class="menu-item-name" data-en="Fattah (Large)">عشار كبير</span><span class="menu-item-price">65 ج</span></div>
+          <div class="menu-item"><span class="menu-item-name" data-en="Adeni Appetizer VIP">غشار عدني VIP</span><span class="menu-item-price">55 ج</span></div>
+          <div class="menu-item"><span class="menu-item-name" data-en="Mixed Spicy Appetizer">غشار ميكس حار</span><span class="menu-item-price">60 ج</span></div>
+          <div class="menu-item"><span class="menu-item-name" data-en="Eggplant Dishes">باذنجان مقلل</span><span class="menu-item-price">30 ج</span></div>
+          <div class="menu-item"><span class="menu-item-name" data-en="Tomatoes Stuffed">طماطم مقلل</span><span class="menu-item-price">20 ج</span></div>
+          <div class="menu-item"><span class="menu-item-name" data-en="Cucumber Stuffed">خيار مقلل</span><span class="menu-item-price">20 ج</span></div>
+          <div class="menu-item"><span class="menu-item-name" data-en="Small Red Peppers">سحاوق أحمر صغير</span><span class="menu-item-price">5 ج</span></div>
+          <div class="menu-item"><span class="menu-item-name" data-en="Large Red Peppers">سحاوق أحمر كبير</span><span class="menu-item-price">8 ج</span></div>
+          <div class="menu-item"><span class="menu-item-name" data-en="Small Green Peppers">سحاوق جن صغير</span><span class="menu-item-price">20 ج</span></div>
+          <div class="menu-item"><span class="menu-item-name" data-en="Large Green Peppers">سحاوق جن كبير</span><span class="menu-item-price">30 ج</span></div>
+          <div class="menu-item"><span class="menu-item-name" data-en="Green Peppers (Other)">سحاوق أخضر</span><span class="menu-item-price">10 ج</span></div>
+          <div class="menu-item"><span class="menu-item-name" data-en="Lemon Sauce">بصل باللیمون</span><span class="menu-item-price">8 ج</span></div>
+          <div class="menu-item"><span class="menu-item-name" data-en="Spicy Sauce Falafel">صوص بالفلو حار</span><span class="menu-item-price">25 ج</span></div>
+          <div class="menu-item"><span class="menu-item-name" data-en="Lemon Butter">صوص ليمون باتر</span><span class="menu-item-price">25 ج</span></div>
+          <div class="menu-item"><span class="menu-item-name" data-en="Shattah">الشطوت</span><span class="menu-item-price">50 ج</span></div>
+          <div class="menu-item"><span class="menu-item-name" data-en="Falafel Lemon">فلفل بالليمون</span><span class="menu-item-price">8 ج</span></div>
+          <div class="menu-item"><span class="menu-item-name" data-en="Lemon Rings">بصل بالليمون</span><span class="menu-item-price">8 ج</span></div>
+          <div class="menu-item"><span class="menu-item-name" data-en="Indian Sauce">غشار بالتمر الهندي</span><span class="menu-item-price">60 ج</span></div>
+        </div>
+
+        <div class="menu-subsection" style="margin-top:40px">
+          <div class="menu-subsection-title" data-en="Oasis Digestives">مهضمات الواحة</div>
+          <div class="menu-items-grid">
+            <div class="menu-item"><span class="menu-item-name" data-en="Lin Rayeb">لين رايب</span><span class="menu-item-price">23 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Oasis Yogurt (Sheikh Zayed only)">عيران الواحة (الشيخ زايد فقط)</span><span class="menu-item-price">75 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Oasis Mixed Fruit Yogurt">زبادي الواحة فواكه مشكل</span><span class="menu-item-price">90 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Yogurt with Strawberry">زبادي توت</span><span class="menu-item-price">75 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Yogurt with Peach">زبادي خوخ</span><span class="menu-item-price">75 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Yogurt with Mango">زبادي مانجو</span><span class="menu-item-price">85 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Yogurt with Guava">زبادي فراولة</span><span class="menu-item-price">75 ج</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======== MANDI MEATS ======== -->
+      <div class="menu-section" id="sec-mandi">
+        <div class="menu-section-header">
+          <h2 class="menu-section-title" data-en="Mandi Meat">اللحم المندي</h2>
+          <p class="menu-section-sub" data-en="Slow-cooked to perfection — the finest Yemeni dining experience">"تتذوق أفضل مندي تسحك بلحم التيس اللياني الصغير"</p>
+        </div>
+
+        <table class="price-table">
+          <thead>
+            <tr>
+              <th data-en="Item">الصنف</th>
+              <th data-en="Quarter">نفر</th>
+              <th data-en="Half">ربع</th>
+              <th data-en="3/4">نصف</th>
+              <th data-en="Full">تيس</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td data-en="Mandi Meat (per person)">لحم مندي</td>
+              <td>475 ج</td><td>710 ج</td><td>1,500 ج</td><td>2,950 ج</td>
+            </tr>
+            <tr>
+              <td data-en="Mandi Meat Full Goat">تيس مندي كامل</td>
+              <td>—</td><td>—</td><td>—</td><td>5,800 ج</td>
+            </tr>
+            <tr>
+              <td data-en="Mandi VIP">تيس مندي VIP</td>
+              <td>—</td><td>—</td><td>—</td><td>6,200 ج</td>
+            </tr>
+            <tr>
+              <td data-en="Sheep Mandi">كروف مندي</td>
+              <td colspan="2">8,500 – 12,000 ج</td>
+              <td>—</td><td>—</td>
+            </tr>
+            <tr>
+              <td data-en="Sheep Mandi (fattened)">كروف مفطح مندي</td>
+              <td colspan="2">8,500 – 12,000 ج</td>
+              <td>—</td><td>—</td>
+            </tr>
+          </tbody>
+        </table>
+        <span class="menu-section-note" data-en="* All Mandi dishes served with rice + sauces">"جميع وجبات اللحم المندي تُقدَّم مع أرز + سحاوق"</span>
+
+        <div class="menu-subsection" style="margin-top:40px">
+          <div class="menu-subsection-title" data-en="Madhbi Meat (Stone Grilled)">اللحم المظبي</div>
+          <p style="font-size:0.84rem;color:var(--text-light);margin-bottom:16px" data-en='"The additional outdoor grilling on the natural stones of the Yemeni environment"'>"اللحم الإضافي المشوي على أحجار البيئة الطبيعية اليمنية"</p>
+          <table class="price-table">
+            <thead>
+              <tr><th data-en="Item">الصنف</th><th data-en="Quarter">ربع</th><th data-en="Half">نصف</th><th data-en="Full">تيس</th></tr>
+            </thead>
+            <tbody>
+              <tr><td data-en="Madhbi">مظبي</td><td>1,500 ج</td><td>2,950 ج</td><td>5,800 ج</td></tr>
+              <tr><td data-en="Makhmod">مخمود</td><td>1,500 ج</td><td>2,950 ج</td><td>5,800 ج</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="menu-subsection">
+          <div class="menu-subsection-title" data-en="Pressure-Cooked Meat">اللحم المضغوط</div>
+          <p style="font-size:0.84rem;color:var(--text-light);margin-bottom:16px" data-en='"Pressure-cooked Saudi-style at Wahet"'>"المضغوط في الواحة بتكرة سعودية"</p>
+          <table class="price-table">
+            <thead>
+              <tr><th data-en="Item">الصنف</th><th data-en="Per Person">نفر</th><th data-en="Quarter">ربع</th><th data-en="Half">نصف</th><th data-en="Full">تيس</th></tr>
+            </thead>
+            <tbody>
+              <tr><td data-en="Pressure Meat">مضغوط</td><td>475 ج</td><td>1,500 ج</td><td>2,950 ج</td><td>5,800 ج</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="menu-subsection">
+          <div class="menu-subsection-title" data-en="Zarbian Meat">اللحم الزربيان</div>
+          <table class="price-table">
+            <thead>
+              <tr><th data-en="Item">الصنف</th><th data-en="Quarter">ربع</th><th data-en="Half">نصف</th><th data-en="Full">تيس</th></tr>
+            </thead>
+            <tbody>
+              <tr><td data-en="Zarbian">زربيان</td><td>1,500 ج</td><td>2,950 ج</td><td>5,800 ج</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="menu-subsection">
+          <div class="menu-subsection-title" data-en="Slow Roasting (Tasweya)">التسويات</div>
+          <p style="font-size:0.84rem;color:var(--text-light);margin-bottom:16px">"يوجد جميع أنواع التسويات على حسب طلبك"</p>
+          <div class="menu-items-grid">
+            <div class="menu-item"><span class="menu-item-name" data-en="Tis Mandi Tasweya">تسوية تيس مندي</span><span class="menu-item-price">1,600 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Sheep Mandi Tasweya">تسوية كروف مندي</span><span class="menu-item-price">1,800 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Roast Duck Tasweya">تسوية ديك رومي</span><span class="menu-item-price">900 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Tis Madhbi Tasweya">تسوية تيس مظبي</span><span class="menu-item-price">1,400 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Liver Tasweya">تسوية فخذة</span><span class="menu-item-price">800 ج</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======== AUTHENTIC ARABIC MEATS ======== -->
+      <div class="menu-section" id="sec-meats">
+        <div class="menu-section-header">
+          <h2 class="menu-section-title" data-en="Authentic Arabic Meats">اللحوم العربية الأصيلة</h2>
+          <p class="menu-section-sub">"الحنين | البرم | الزموم | المقلق | البريافي"</p>
+        </div>
+
+        <div class="menu-items-grid">
+          <div class="menu-item"><span class="menu-item-name" data-en="Per Person Haneed">نفر لحم حنيذ</span><span class="menu-item-price">475 ج</span></div>
+          <div class="menu-item"><span class="menu-item-name" data-en="Quarter Haneed">ربع تيس حنيذ</span><span class="menu-item-price">1,500 ج</span></div>
+          <div class="menu-item"><span class="menu-item-name" data-en="Half Haneed">نصف تيس حنيذ</span><span class="menu-item-price">2,950 ج</span></div>
+          <div class="menu-item"><span class="menu-item-name" data-en="Full Haneed">تيس كامل حنيذ</span><span class="menu-item-price">5,800 ج</span></div>
+          <div class="menu-item"><span class="menu-item-name" data-en="Hashy Lamb">لحم حاشي نفر (جديد)</span><span class="menu-item-price">420 ج</span></div>
+          <div class="menu-item"><span class="menu-item-name" data-en="Per Person Brum">نفر لحم برم</span><span class="menu-item-price">475 ج</span></div>
+          <div class="menu-item"><span class="menu-item-name" data-en="Quarter Brum">ربع تيس برم</span><span class="menu-item-price">1,500 ج</span></div>
+          <div class="menu-item"><span class="menu-item-name" data-en="Half Brum">نصف تيس برم</span><span class="menu-item-price">2,950 ج</span></div>
+          <div class="menu-item"><span class="menu-item-name" data-en="Full Brum">تيس كامل برم</span><span class="menu-item-price">5,800 ج</span></div>
+          <div class="menu-item"><span class="menu-item-name" data-en="Per Person Marmoom">نفر لحم مرموم</span><span class="menu-item-price">475 ج</span></div>
+          <div class="menu-item"><span class="menu-item-name" data-en="Quarter Marmoom">ربع تيس مرموم</span><span class="menu-item-price">1,500 ج</span></div>
+          <div class="menu-item"><span class="menu-item-name" data-en="Half Marmoom">نصف تيس مرموم</span><span class="menu-item-price">2,950 ج</span></div>
+          <div class="menu-item"><span class="menu-item-name" data-en="Full Marmoom">تيس كامل مرموم</span><span class="menu-item-price">5,800 ج</span></div>
+          <div class="menu-item"><span class="menu-item-name" data-en="Quarter Moqlaq">ربع تيس مقلق</span><span class="menu-item-price">1,500 ج</span></div>
+          <div class="menu-item"><span class="menu-item-name" data-en="Half Moqlaq">نصف تيس مقلق</span><span class="menu-item-price">2,950 ج</span></div>
+          <div class="menu-item"><span class="menu-item-name" data-en="Full Moqlaq">تيس كامل مقلق</span><span class="menu-item-price">5,800 ج</span></div>
+          <div class="menu-item"><span class="menu-item-name" data-en="Quarter Biryani">ربع تيس بريياني</span><span class="menu-item-price">1,500 ج</span></div>
+          <div class="menu-item"><span class="menu-item-name" data-en="Half Biryani">نصف تيس بريياني</span><span class="menu-item-price">2,800 ج</span></div>
+          <div class="menu-item"><span class="menu-item-name" data-en="Full Biryani">تيس كامل بريياني</span><span class="menu-item-price">5,600 ج</span></div>
+        </div>
+
+        <div class="menu-subsection" style="margin-top:40px">
+          <div class="menu-subsection-title" data-en="Egyptian Tagines">الطواجن المصرية</div>
+          <p style="font-size:0.84rem;color:var(--text-light);margin-bottom:16px">"طعم مصري أصيل برائحة الزمن الجميل"</p>
+          <div class="menu-photo-grid">
+            <div class="menu-photo-card"><div class="menu-photo-card-slot"><div class="menu-photo-card-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div><div class="menu-photo-card-body"><div class="menu-photo-card-name" data-en="Meat with Onion Tagine">طاجن لحم بالبصل</div><div class="menu-photo-card-price">160 ج</div></div></div>
+            <div class="menu-photo-card"><div class="menu-photo-card-slot"><div class="menu-photo-card-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div><div class="menu-photo-card-body"><div class="menu-photo-card-name" data-en="Meat with Okra Tagine">طاجن لحم بالباميا</div><div class="menu-photo-card-price">160 ج</div></div></div>
+            <div class="menu-photo-card"><div class="menu-photo-card-slot"><div class="menu-photo-card-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div><div class="menu-photo-card-body"><div class="menu-photo-card-name" data-en="Meat Mixed Veg Tagine">طاجن لحم بالخضار المشكل</div><div class="menu-photo-card-price">160 ج</div></div></div>
+            <div class="menu-photo-card"><div class="menu-photo-card-slot"><div class="menu-photo-card-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div><div class="menu-photo-card-body"><div class="menu-photo-card-name" data-en="Meat with Potatoes Tagine">طاجن لحم بالبطاطس</div><div class="menu-photo-card-price">160 ج</div></div></div>
+            <div class="menu-photo-card"><div class="menu-photo-card-slot"><div class="menu-photo-card-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div><div class="menu-photo-card-body"><div class="menu-photo-card-name" data-en="Meat with Freekeh Tagine">طاجن لحم بالفريكة</div><div class="menu-photo-card-price">160 ج</div></div></div>
+            <div class="menu-photo-card"><div class="menu-photo-card-slot"><div class="menu-photo-card-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div><div class="menu-photo-card-body"><div class="menu-photo-card-name" data-en="Chicken Potatoes Tagine">طاجن دجاج بالبطاطس</div><div class="menu-photo-card-price">140 ج</div></div></div>
+            <div class="menu-photo-card"><div class="menu-photo-card-slot"><div class="menu-photo-card-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div><div class="menu-photo-card-body"><div class="menu-photo-card-name" data-en="Macaroni Tagine">طاجن مكرونة بشاميل</div><div class="menu-photo-card-price">130 ج</div></div></div>
+            <div class="menu-photo-card"><div class="menu-photo-card-slot"><div class="menu-photo-card-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div><div class="menu-photo-card-body"><div class="menu-photo-card-name" data-en="Plain Rice Tagine">طاجن رز معمر سادة</div><div class="menu-photo-card-price">90 ج</div></div></div>
+            <div class="menu-photo-card"><div class="menu-photo-card-slot"><div class="menu-photo-card-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div><div class="menu-photo-card-body"><div class="menu-photo-card-name" data-en="Rice with Meat Tagine">طاجن رز معمر باللحمة</div><div class="menu-photo-card-price">160 ج</div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======== EGYPTIAN GRILLS ======== -->
+      <div class="menu-section" id="sec-grills">
+        <div class="menu-section-header">
+          <h2 class="menu-section-title" data-en="Egyptian Grills">المشويات المصرية</h2>
+          <p class="menu-section-sub" data-en='"Egyptian-style grills, 100% Egyptian hands"'>"مشويات شهية بأيادي مصرية 100%"</p>
+        </div>
+
+        <table class="price-table">
+          <thead>
+            <tr>
+              <th data-en="Item">الصنف</th>
+              <th data-en="Kilo">كيلو</th>
+              <th data-en="Half">نصف</th>
+              <th data-en="Third">ثلث</th>
+              <th data-en="Quarter">ربع</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td data-en="Kofta Klandoz">كفتة كلندوز</td><td>520 ج</td><td>260 ج</td><td>180 ج</td><td>130 ج</td></tr>
+            <tr><td data-en="Kofta Dhani">كفتة ضاني</td><td>770 ج</td><td>385 ج</td><td>260 ج</td><td>200 ج</td></tr>
+            <tr><td data-en="Tarab">طـرب</td><td>670 ج</td><td>340 ج</td><td>230 ج</td><td>170 ج</td></tr>
+            <tr><td data-en="Kabab Dhani">كباب ضاني</td><td>1,240 ج</td><td>620 ج</td><td>420 ج</td><td>310 ج</td></tr>
+            <tr><td data-en="Ribs Dhani">ريش ضاني</td><td>1,240 ج</td><td>620 ج</td><td>420 ج</td><td>310 ج</td></tr>
+            <tr><td data-en="Mixed Grill">مشكل مشاوي</td><td>930 ج</td><td>465 ج</td><td>315 ج</td><td>—</td></tr>
+            <tr><td data-en="Tawooq">شيش طاووق</td><td>400 ج</td><td>210 ج</td><td>135 ج</td><td>105 ج</td></tr>
+            <tr><td data-en="Sausage Grilled">سجق مشوي</td><td>670 ج</td><td>340 ج</td><td>230 ج</td><td>170 ج</td></tr>
+            <tr><td data-en="Liver Grilled">كبدة مشوية</td><td>500 ج</td><td>250 ج</td><td>170 ج</td><td>125 ج</td></tr>
+          </tbody>
+        </table>
+        <span class="menu-section-note">"تُقدَّم وجبات الشواء المصرية مع عيش بلدي/ شامي"</span>
+
+        <div class="menu-subsection" style="margin-top:32px">
+          <div class="menu-subsection-title" data-en="Pigeon">الحمام</div>
+          <div class="menu-photo-grid">
+            <div class="menu-photo-card"><div class="menu-photo-card-slot"><div class="menu-photo-card-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div><div class="menu-photo-card-body"><div class="menu-photo-card-name" data-en="Stuffed Pigeon with Rice">فرد حمام محشي رز</div><div class="menu-photo-card-price">190 ج</div></div></div>
+            <div class="menu-photo-card"><div class="menu-photo-card-slot"><div class="menu-photo-card-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div><div class="menu-photo-card-body"><div class="menu-photo-card-name" data-en="Stuffed Pigeon with Freekeh">فرد حمام محشي فريكة</div><div class="menu-photo-card-price">190 ج</div></div></div>
+            <div class="menu-photo-card"><div class="menu-photo-card-slot"><div class="menu-photo-card-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div><div class="menu-photo-card-body"><div class="menu-photo-card-name" data-en="Grilled Pigeon">فرد حمام مشوي</div><div class="menu-photo-card-price">190 ج</div></div></div>
+            <div class="menu-photo-card"><div class="menu-photo-card-slot"><div class="menu-photo-card-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div><div class="menu-photo-card-body"><div class="menu-photo-card-name" data-en="Duo Pigeon with Rice">جوز حمام محشي رز</div><div class="menu-photo-card-price">380 ج</div></div></div>
+            <div class="menu-photo-card"><div class="menu-photo-card-slot"><div class="menu-photo-card-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div><div class="menu-photo-card-body"><div class="menu-photo-card-name" data-en="Duo Pigeon with Freekeh">جوز حمام محشي فريكة</div><div class="menu-photo-card-price">380 ج</div></div></div>
+            <div class="menu-photo-card"><div class="menu-photo-card-slot"><div class="menu-photo-card-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div><div class="menu-photo-card-body"><div class="menu-photo-card-name" data-en="Duo Pigeon Grilled">جوز حمام مشوي</div><div class="menu-photo-card-price">380 ج</div></div></div>
+          </div>
+        </div>
+
+        <div class="menu-subsection">
+          <div class="menu-subsection-title" data-en="Hawawshi & Sides">حواوشي وإضافات</div>
+          <div class="menu-photo-grid">
+            <div class="menu-photo-card"><div class="menu-photo-card-slot"><div class="menu-photo-card-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div><div class="menu-photo-card-body"><div class="menu-photo-card-name" data-en="Hawawshi Grilled">حواوشي مشوي</div><div class="menu-photo-card-price">100 ج</div></div></div>
+            <div class="menu-photo-card"><div class="menu-photo-card-slot"><div class="menu-photo-card-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div><div class="menu-photo-card-body"><div class="menu-photo-card-name" data-en="Hawawshi Combo">حواوشي كومبو (بطاطس + مخلل)</div><div class="menu-photo-card-price">120 ج</div></div></div>
+            <div class="menu-photo-card"><div class="menu-photo-card-slot"><div class="menu-photo-card-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div><div class="menu-photo-card-body"><div class="menu-photo-card-name" data-en="Marinated Serving (Rice or Veg)">مورة + خضار سوتيه أو أرز</div><div class="menu-photo-card-price">560 ج</div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======== CHICKEN ======== -->
+      <div class="menu-section" id="sec-chicken">
+        <div class="menu-section-header">
+          <h2 class="menu-section-title" data-en="Chicken">الدجاج</h2>
+          <p class="menu-section-sub" data-en='"Diverse preparations for the finest free-range chicken"'>"تشكيلات متنوعة للدجاج العزبي اللذيذ"</p>
+        </div>
+
+        <div class="chicken-grid">
+          <div class="chicken-item">
+            <div class="chicken-item-photo"><div class="chicken-item-photo-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div>
+            <div class="chicken-item-text">
+              <h4 data-en="Harazi Shawarma">فرخة شواية حرازي</h4>
+              <div class="chicken-price-row"><span data-en="Half">نصف</span><span>220 ج</span></div>
+              <div class="chicken-price-row"><span data-en="Full">فرخة</span><span>430 ج</span></div>
+            </div>
+          </div>
+          <div class="chicken-item">
+            <div class="chicken-item-photo"><div class="chicken-item-photo-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div>
+            <div class="chicken-item-text">
+              <h4 data-en="Mandi Chicken">فرخة مندي</h4>
+              <div class="chicken-price-row"><span data-en="Half">نصف</span><span>220 ج</span></div>
+              <div class="chicken-price-row"><span data-en="Full">فرخة</span><span>430 ج</span></div>
+            </div>
+          </div>
+          <div class="chicken-item">
+            <div class="chicken-item-photo"><div class="chicken-item-photo-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div>
+            <div class="chicken-item-text">
+              <h4 data-en="Stone-Grilled Chicken">فرخة مطبي على الحجر</h4>
+              <div class="chicken-price-row"><span data-en="Half">نصف</span><span>220 ج</span></div>
+              <div class="chicken-price-row"><span data-en="Full">فرخة</span><span>430 ج</span></div>
+            </div>
+          </div>
+          <div class="chicken-item">
+            <div class="chicken-item-photo"><div class="chicken-item-photo-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div>
+            <div class="chicken-item-text">
+              <h4 data-en="Coal-Grilled Chicken">فرخة مشوية على الفحم</h4>
+              <div class="chicken-price-row"><span data-en="Half">نصف</span><span>220 ج</span></div>
+              <div class="chicken-price-row"><span data-en="Full">فرخة</span><span>430 ج</span></div>
+            </div>
+          </div>
+          <div class="chicken-item">
+            <div class="chicken-item-photo"><div class="chicken-item-photo-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div>
+            <div class="chicken-item-text">
+              <h4 data-en="Pressure Chicken">فرخة مضغوط</h4>
+              <div class="chicken-price-row"><span data-en="Half">نصف</span><span>230 ج</span></div>
+              <div class="chicken-price-row"><span data-en="Full">فرخة</span><span>440 ج</span></div>
+            </div>
+          </div>
+          <div class="chicken-item">
+            <div class="chicken-item-photo"><div class="chicken-item-photo-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div>
+            <div class="chicken-item-text">
+              <h4 data-en="Zarbian Chicken">فرخة زربيان</h4>
+              <div class="chicken-price-row"><span data-en="Half">نصف</span><span>230 ج</span></div>
+              <div class="chicken-price-row"><span data-en="Full">فرخة</span><span>440 ج</span></div>
+            </div>
+          </div>
+          <div class="chicken-item">
+            <div class="chicken-item-photo"><div class="chicken-item-photo-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div>
+            <div class="chicken-item-text">
+              <h4 data-en="Biryani Chicken">فرخة بريياني</h4>
+              <div class="chicken-price-row"><span data-en="Half">نصف</span><span>230 ج</span></div>
+              <div class="chicken-price-row"><span data-en="Full">فرخة</span><span>440 ج</span></div>
+            </div>
+          </div>
+          <div class="chicken-item">
+            <div class="chicken-item-photo"><div class="chicken-item-photo-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div>
+            <div class="chicken-item-text">
+              <h4 data-en="Marmoom Chicken">فرخة مرزوم</h4>
+              <div class="chicken-price-row"><span data-en="Half">نصف</span><span>220 ج</span></div>
+              <div class="chicken-price-row"><span data-en="Full">فرخة</span><span>430 ج</span></div>
+            </div>
+          </div>
+          <div class="chicken-item">
+            <div class="chicken-item-photo"><div class="chicken-item-photo-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div>
+            <div class="chicken-item-text">
+              <h4 data-en="Brum Chicken">فرخة برم</h4>
+              <div class="chicken-price-row"><span data-en="Half">نصف</span><span>220 ج</span></div>
+              <div class="chicken-price-row"><span data-en="Full">فرخة</span><span>430 ج</span></div>
+            </div>
+          </div>
+          <div class="chicken-item">
+            <div class="chicken-item-photo"><div class="chicken-item-photo-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div>
+            <div class="chicken-item-text">
+              <h4 data-en="Fried Chicken (New)">مقلوبة فراخ (جديد)</h4>
+              <div class="chicken-price-row"><span data-en="Half">نصف</span><span>220 ج</span></div>
+              <div class="chicken-price-row"><span data-en="Full">فرخة</span><span>430 ج</span></div>
+            </div>
+          </div>
+        </div>
+        <p style="margin-top:12px;font-size:0.84rem;color:var(--text-light)" data-en="Quarter breast/thigh style — choose your preference: 125 ج / 130 ج">ربع فرخة ورك "اختار نوع التسوية": 120 ج — ربع فرخة صدر: 130 ج</p>
+        <span class="menu-section-note">"جميع وجبات الدجاج تُقدَّم مع أرز + سحاوق"</span>
+      </div>
+
+      <!-- ======== FISH ======== -->
+      <div class="menu-section" id="sec-fish">
+        <div class="menu-section-header">
+          <h2 class="menu-section-title" data-en="Fish">الأسماك</h2>
+          <p class="menu-section-sub" data-en='"Fresh sea fish prepared the authentic Yemeni way"'>"سمك فريش من البحر لائدتك على الطريقة اليمنية"</p>
+        </div>
+
+        <div class="menu-photo-grid">
+          <div class="menu-photo-card">
+            <div class="menu-photo-card-slot"><div class="menu-photo-card-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div>
+            <div class="menu-photo-card-body"><div class="menu-photo-card-name" data-en="Gambari Moffa">جمبري موفا</div><div class="menu-photo-card-price">حسب اليوم</div></div>
+          </div>
+          <div class="menu-photo-card">
+            <div class="menu-photo-card-slot"><div class="menu-photo-card-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div>
+            <div class="menu-photo-card-body"><div class="menu-photo-card-name" data-en="Gambari Saltona">جمبري صالتونة</div><div class="menu-photo-card-price">حسب اليوم</div></div>
+          </div>
+          <div class="menu-photo-card">
+            <div class="menu-photo-card-slot"><div class="menu-photo-card-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div>
+            <div class="menu-photo-card-body"><div class="menu-photo-card-name" data-en="Gambari Jumbo Grilled">جمبري جامبو مشوي</div><div class="menu-photo-card-price">حسب اليوم</div></div>
+          </div>
+          <div class="menu-photo-card">
+            <div class="menu-photo-card-slot"><div class="menu-photo-card-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div>
+            <div class="menu-photo-card-body"><div class="menu-photo-card-name" data-en="Gambari Jumbo Fried">جمبري جامبو مقلي</div><div class="menu-photo-card-price">حسب اليوم</div></div>
+          </div>
+          <div class="menu-photo-card">
+            <div class="menu-photo-card-slot"><div class="menu-photo-card-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div>
+            <div class="menu-photo-card-body"><div class="menu-photo-card-name" data-en="Gambari Wassat">جمبري وسط سمك</div><div class="menu-photo-card-price">حسب اليوم</div></div>
+          </div>
+          <div class="menu-photo-card">
+            <div class="menu-photo-card-slot"><div class="menu-photo-card-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div>
+            <div class="menu-photo-card-body"><div class="menu-photo-card-name" data-en="Sbyadiya Samak">صبادية سمك</div><div class="menu-photo-card-price">حسب اليوم</div></div>
+          </div>
+          <div class="menu-photo-card">
+            <div class="menu-photo-card-slot"><div class="menu-photo-card-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div>
+            <div class="menu-photo-card-body"><div class="menu-photo-card-name" data-en="Fish Bouri Grilled Arabic">سمك بوري عربي مشوي</div><div class="menu-photo-card-price">حسب اليوم</div></div>
+          </div>
+          <div class="menu-photo-card">
+            <div class="menu-photo-card-slot"><div class="menu-photo-card-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div>
+            <div class="menu-photo-card-body"><div class="menu-photo-card-name" data-en="Fish Dierk Grilled">سمك ديرك مشوي</div><div class="menu-photo-card-price">حسب اليوم</div></div>
+          </div>
+          <div class="menu-photo-card">
+            <div class="menu-photo-card-slot"><div class="menu-photo-card-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div>
+            <div class="menu-photo-card-body"><div class="menu-photo-card-name" data-en="Fish Dierk Fried">سمك ديرك مقلي</div><div class="menu-photo-card-price">حسب اليوم</div></div>
+          </div>
+          <div class="menu-photo-card">
+            <div class="menu-photo-card-slot"><div class="menu-photo-card-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div>
+            <div class="menu-photo-card-body"><div class="menu-photo-card-name" data-en="Fish Filet Fried">سمك فيليه مقلي</div><div class="menu-photo-card-price">حسب اليوم</div></div>
+          </div>
+        </div>
+        <p class="fish-note" data-en="* Fish prices are set daily according to market prices">* أسعار الأسماك تُحدَّد يومياً حسب سعر السوق</p>
+      </div>
+
+      <!-- ======== BAKERY & SOUPS ======== -->
+      <div class="menu-section" id="sec-bakery">
+        <div class="menu-section-header">
+          <h2 class="menu-section-title" data-en="Bakery & Hot Soups">المخبازة والشوربة والمقبلات الساخنة</h2>
+          <p class="menu-section-sub" data-en='"From Breakfast to Dinner, Wahet is with you"'>"من الفطور للعشاء معاك في واحة اليمن"</p>
+        </div>
+
+        <div class="menu-subsection">
+          <div class="menu-subsection-title" data-en="Bakery">المخبازة</div>
+          <div class="bakery-grid">
+            <div class="menu-item"><span class="menu-item-name" data-en="Aseed Broth">عصيد مرق</span><span class="menu-item-price">80 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Aseed Butter Honey">عصيد سمن وعسل</span><span class="menu-item-price">110 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Sana'a Kababgy">كباب صنعاني نفر</span><span class="menu-item-price">250 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Beans with Tuna">نفر فاصوليا بالتونا</span><span class="menu-item-price">100 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Beans with Egg">نفر فاصوليا بالبيض</span><span class="menu-item-price">65 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Egg Omelette">نفر بيض أومليت</span><span class="menu-item-price">60 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Egg Shakshuka">نفر بيض شكشوكة</span><span class="menu-item-price">60 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Egg Adeni Shakshuka">نفر بيض شكشوكة عدني</span><span class="menu-item-price">60 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Cheese Egg Omelet">لمسة بيض + جبنة</span><span class="menu-item-price">65 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Foul">نفر فول</span><span class="menu-item-price">65 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Foul with Egg">نفر فول بالبيض</span><span class="menu-item-price">70 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Meat with Beef">لحم صغار بقري</span><span class="menu-item-price">160 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Beef Meat Leg">عقدة لحم غلمي</span><span class="menu-item-price">320 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Beef Meat Thigh">عقدة لحم بقري</span><span class="menu-item-price">145 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Chicken Thigh">عقدة دجاج</span><span class="menu-item-price">120 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Liver Full">كبدة كاملة</span><span class="menu-item-price">170 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Liver Small">كبدة غلمي</span><span class="menu-item-price">85 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Sana'a Salad">سلطة صنعاني</span><span class="menu-item-price">140 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Tuna Salad">سلطة تونة</span><span class="menu-item-price">165 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Sauteed Mixed Veg">فكسة غلمي</span><span class="menu-item-price">320 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Sauteed Beef">فكسة بقري</span><span class="menu-item-price">145 ج</span></div>
+          </div>
+        </div>
+
+        <div class="menu-subsection">
+          <div class="menu-subsection-title" data-en="Hot Soups & Starters">الشوربة والمقبلات الساخنة</div>
+          <div class="menu-items-grid">
+            <div class="menu-item"><span class="menu-item-name" data-en="Large Mixed Hawawshi">صينية محاشي مشكل كبير</span><span class="menu-item-price">185 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Small Mixed Hawawshi">محاشي مشكل صغير</span><span class="menu-item-price">90 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Oasis Mixed Appetizers">ميكس مقبلات الواحة</span><span class="menu-item-price">240 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Sambousa Meat">رفاق باللحمة</span><span class="menu-item-price">160 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Shami Mix Sambousa">ميكس شامي سمبوسك كوبية</span><span class="menu-item-price">110 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Hawawshi Vine Leaves">محاشي ورق عنب</span><span class="menu-item-price">60 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Mmbbar">ممبار</span><span class="menu-item-price">75 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Cheese Sambousa">سمبوسك جبنة</span><span class="menu-item-price">40 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Meat Sambousa">سمبوسك لحم</span><span class="menu-item-price">45 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Grilled Potato Sausage">بطاطس صوابع مقلية</span><span class="menu-item-price">35 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Fried Potato Cubes Herbs">بطاطس قطع مقلية بالأعشاب</span><span class="menu-item-price">55 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Sauteed Potato Herbs">بطاطس قطع سوتيه بالأعشاب</span><span class="menu-item-price">55 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Sauteed Veg">خضار سوتيه</span><span class="menu-item-price">50 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Molokhia">ملوخية</span><span class="menu-item-price">45 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Pigeon Soup">شوربة حمام</span><span class="menu-item-price">70 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Ox Tail Soup">شوربة لسان عصفور</span><span class="menu-item-price">25 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Chicken Cream Soup">شوربة كريمة فراخ</span><span class="menu-item-price">130 ج</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======== TRAY DEALS ======== -->
+      <div class="menu-section" id="sec-trays">
+        <div class="menu-section-header">
+          <h2 class="menu-section-title" data-en="Oasis Tray Deals">عروض الصواني</h2>
+          <p class="menu-section-sub" data-en='"Wahet trays — bringing everyone together on one table"'>"صواني الواحة تجمع كل الرأي زوناي على سُفرة واحدة"</p>
+        </div>
+
+        <div class="menu-deal-card">
+          <div class="menu-deal-header">
+            <span class="menu-deal-name" data-en="Friends Tray - 3 Persons">صينية الأصدقاء — 3 أفراد</span>
+            <span class="menu-deal-persons" data-en="3 Persons">3 أفراد</span>
+            <span class="menu-deal-price">1,760 ج</span>
+          </div>
+          <p class="menu-deal-contents" data-en="Choice of Tasweya: Tis Mandi + kilo kofta klandoz + 3 + sauces">ثمن تيس مندي + فرخة التسوية من اختيارك + كيلو كفتة كلندوز + أرز + 3 سلطة + 3 صوص سحاوق</p>
+        </div>
+
+        <div class="menu-deal-card">
+          <div class="menu-deal-header">
+            <span class="menu-deal-name" data-en="Family Tray - 4 Persons">صينية لمة العيلة — 4 أفراد</span>
+            <span class="menu-deal-persons" data-en="4 Persons">4 أفراد</span>
+            <span class="menu-deal-price">1,890 ج</span>
+          </div>
+          <p class="menu-deal-contents" data-en="Tis mandi + kilo kofta klandoz + 8 pieces + 4 sambousa + rice + 4 sauces">ربع تيس مندي + نصف كيلو كفتة كلندوز + 8 قطعة مبار + 4 قطعة سمبوسك لحم + أرز + 4 سلطة + 4 صوص سحاوق</p>
+        </div>
+
+        <div class="menu-deal-card">
+          <div class="menu-deal-header">
+            <span class="menu-deal-name" data-en="Monsters Tray - 8 Persons">صينية الوحوش — 8 أفراد</span>
+            <span class="menu-deal-persons" data-en="8 Persons">8 أفراد</span>
+            <span class="menu-deal-price">4,190 ج</span>
+          </div>
+          <p class="menu-deal-contents" data-en="Half tis mandi + 2 tasweya + kilo kofta klandoz + 6 kofta pieces + 6 sambousa + 5 ribs + 8 sauces">نصف تيس مندي + 2 فرخة التسوية من اختيارك + كيلو كفتة كلندوز + 6 قطعة + 6 قطعة سمبوسك لحم + 5 قطعة مبار + أرز + 8 سلطة + 8 صوص سحاوق</p>
+        </div>
+
+        <div class="menu-deal-card">
+          <div class="menu-deal-header">
+            <span class="menu-deal-name" data-en="Wahet Al Yemen Tray - 10 Persons">صينية واحة اليمن — 10 أفراد</span>
+            <span class="menu-deal-persons" data-en="10 Persons">10 أفراد</span>
+            <span class="menu-deal-price">5,040 ج</span>
+          </div>
+          <p class="menu-deal-contents" data-en="Full Yemeni tray experience — nusf tis mandi + full tasweya + kilo kofta + sausage + 5 sambousa + 5 ribs + 10 sauces">نصف تيس مندي + فرخة التسوية من اختيارك + كيلو شيش طاووق + كفتة كلندوز + نصف كيلو سجق ضاني + 2 حواوشي + 5 قطعة سمبوسك جبنة + 5 قطعة سمبوسك لحم + 8 قطعة مبار + أرز + 10 سلطة + 10 طحينة + 10 صوص سحاوق</p>
+        </div>
+
+        <div class="menu-deal-card">
+          <div class="menu-deal-header">
+            <span class="menu-deal-name" data-en="Oasis Tray x Zayed+3 - 3 Persons">صينية الواحة × زايد+3 — 3 أفراد</span>
+            <span class="menu-deal-persons" data-en="3 Persons">3 أفراد</span>
+            <span class="menu-deal-price">1,540 ج</span>
+          </div>
+          <p class="menu-deal-contents" data-en="Suwir mandi + shish tawooq + kofta + 2 pigeons + rice + sauces">سوير مندي + نص شيش طاووق + كفتة + 2 فرد حمام (محشي/مشوي) + مشكل محاشي صغير + أرز + 3 سلطة + 3 صوص سحاوق</p>
+        </div>
+
+        <div class="menu-deal-card">
+          <div class="menu-deal-header">
+            <span class="menu-deal-name" data-en="Teachers Tray - 6 Persons">صينية المعلمين — 6 أفراد</span>
+            <span class="menu-deal-persons" data-en="6 Persons">6 أفراد</span>
+            <span class="menu-deal-price">3,355 ج</span>
+          </div>
+          <p class="menu-deal-contents" data-en="Kilo kofta + kilo shish + 4 pigeon + 8 mmbbar + 6 sambousa + 6 sauces">كيلو كفتة + كيلو شيش + 4 حمام كبير + 8 ممبار + 6 سمبوسك جبنة + أرز + 6 سلطة + 6 صوص سحاوق</p>
+        </div>
+
+        <div class="menu-deal-card">
+          <div class="menu-deal-header">
+            <span class="menu-deal-name" data-en="Captain's Tray - 10 Persons">صينية القبطان — 10 أفراد</span>
+            <span class="menu-deal-persons" data-en="10 Persons">10 أفراد</span>
+            <span class="menu-deal-price">4,500 ج</span>
+          </div>
+          <p class="menu-deal-contents" data-en="2 kg Jumbo Gambari grilled + 2 dierk + 1 bouri + kilo potatoes + rice + sauces">2 ك جمبري جامبو مشوي + 2 ديرك مشوي + 1 ك سمك فيليه مقلي + بوري مشوي + 1 ك بطاطس أعشاب + رز أبيض + 5 صوص ليمون باتر + 5 صوص سحاوق</p>
+        </div>
+
+      </div>
+
+      <!-- ======== MEAL DEALS ======== -->
+      <div class="menu-section" id="sec-meals">
+        <div class="menu-section-header">
+          <h2 class="menu-section-title" data-en="Meal Deals">عروض الوجبات</h2>
+          <p class="menu-section-sub" data-en='"Mixed grills... stories to tell"'>"ميكس مشويات.. يُقال فيه حكايات"</p>
+        </div>
+
+        <div class="menu-deal-card">
+          <div class="menu-deal-header">
+            <span class="menu-deal-name" data-en="Savings Meal — Individual">وجبة التوفير — فرد</span>
+            <span class="menu-deal-persons" data-en="1 Person">1 فرد</span>
+            <span class="menu-deal-price">190 ج</span>
+          </div>
+          <p class="menu-deal-contents" data-en="Quarter tasweya + 125g kofta + rice + sauces + salad + country bread">ربع فرخة التسوية من اختيارك + 125 جرام كفتة + أرز + سحاوق + سلطة + عيش بلدي</p>
+        </div>
+
+        <div class="menu-deal-card">
+          <div class="menu-deal-header">
+            <span class="menu-deal-name" data-en="Comfortable Meal — Individual">وجبة الرايق — فرد</span>
+            <span class="menu-deal-persons" data-en="1 Person">1 فرد</span>
+            <span class="menu-deal-price">230 ج</span>
+          </div>
+          <p class="menu-deal-contents" data-en="Quarter kilo kofta klandoz + rice + potatoes + salad + tahini + country bread">ربع كيلو كفتة كلندوز + أرز + بطاطس + سلطة + طحينة + عيش بلدي</p>
+        </div>
+
+        <div class="menu-deal-card">
+          <div class="menu-deal-header">
+            <span class="menu-deal-name" data-en="Clever Meal — Individual">وجبة التكا — فرد</span>
+            <span class="menu-deal-persons" data-en="1 Person">1 فرد</span>
+            <span class="menu-deal-price">290 ج</span>
+          </div>
+          <p class="menu-deal-contents" data-en="Half grilled chicken + rice + potatoes + salad + tahini + country bread">نص فراخ مشوية + أرز + بطاطس + سلطة + طحينة + عيش بلدي</p>
+        </div>
+
+        <div class="menu-deal-card">
+          <div class="menu-deal-header">
+            <span class="menu-deal-name" data-en="Shish & Kofta — Individual">وجبة شيش وكفتة — فرد</span>
+            <span class="menu-deal-persons" data-en="1 Person">1 فرد</span>
+            <span class="menu-deal-price">300 ج</span>
+          </div>
+          <p class="menu-deal-contents" data-en="Quarter kilo shish + 3 kofta + rice + potatoes + salad + country bread">ربع كيلو شيش شيش + 3 صوابع كفتة + أرز + بطاطس + سلطة + عيش بلدي</p>
+        </div>
+
+        <div class="menu-deal-card">
+          <div class="menu-deal-header">
+            <span class="menu-deal-name" data-en="Grill Mix Jireel — Individual">وجبة ميكس جريل — فرد</span>
+            <span class="menu-deal-persons" data-en="1 Person">1 فرد</span>
+            <span class="menu-deal-price">450 ج</span>
+          </div>
+          <p class="menu-deal-contents" data-en="Quarter grilled leg + kofta + shish + ribs + 62g sausage + rice + potatoes + country bread">ربع فراخ ورك مشوي + قطعة كفتة + قطعة شيش + قطعة كباب + قطعة ريش + 62 جرام سجق + أرز + بطاطس + سلطة + عيش بلدي</p>
+        </div>
+
+        <div class="menu-deal-card">
+          <div class="menu-deal-header">
+            <span class="menu-deal-name" data-en="Shawarma Meal — 2 Persons">وجبة شواية فردين</span>
+            <span class="menu-deal-persons" data-en="2 Persons">2 أفراد</span>
+            <span class="menu-deal-price">840 ج</span>
+          </div>
+          <p class="menu-deal-contents" data-en="Half grilled chicken + 2 kofta + 2 ribs + 2 kofta fingers + 2 tawooq sausage + kilo sausage + 2 salad + 2 tahini + country bread">نصف فرخة مشوية + 2 قطعة كباب + 2 قطعة ريش + 2 صابع كفتة + 2 صابع طرب + ثمن كيلو سجق + 2 سلطة + 2 طحينة + 2 مخلل + عيش بلدي</p>
+        </div>
+
+        <div class="menu-deal-card">
+          <div class="menu-deal-header">
+            <span class="menu-deal-name" data-en="Wahet Shawarma — 4 Persons">وجبة شواية واحة اليمن — 4 أفراد</span>
+            <span class="menu-deal-persons" data-en="4 Persons">4 أفراد</span>
+            <span class="menu-deal-price">1,840 ج</span>
+          </div>
+          <p class="menu-deal-contents" data-en="Full grilled chicken + quarter kilo kofta + 4 kabab + 4 ribs + quarter kilo sausage + 4 tahini + 4 salad + 2 makhallal + 2 country bread">فرخة مشوية + ربع كيلو كفتة + 4 قطع كباب + 4 قطع ريش + ربع كيلو سجق + 4 طحينة + 4 سلطة + 2 مخلل + 2 عيش بلدي</p>
+        </div>
+
+        <!-- Yemeni Broast -->
+        <div class="menu-subsection" style="margin-top:40px">
+          <div class="menu-subsection-title" data-en="Yemeni Broast">البروست اليمني</div>
+          <p style="font-size:0.84rem;color:var(--text-light);margin-bottom:16px;font-style:italic" data-en='"Crunch and enjoy"'>"قرمش وانتعش" — يُقدَّم مع طاطس + ثومية + كولسلو + كاتشب + صوص سايسي + عيش شامي</p>
+          <div class="menu-photo-grid">
+            <div class="menu-photo-card"><div class="menu-photo-card-slot"><div class="menu-photo-card-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div><div class="menu-photo-card-body"><div class="menu-photo-card-name" data-en="Quarter Broast (2 pcs)">ربع فرخة — 2 قطعة</div><div class="menu-photo-card-price">130 ج</div></div></div>
+            <div class="menu-photo-card"><div class="menu-photo-card-slot"><div class="menu-photo-card-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div><div class="menu-photo-card-body"><div class="menu-photo-card-name" data-en="Half Broast (4 pcs)">نصف فرخة — 4 قطع</div><div class="menu-photo-card-price">250 ج</div></div></div>
+            <div class="menu-photo-card"><div class="menu-photo-card-slot"><div class="menu-photo-card-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div><div class="menu-photo-card-body"><div class="menu-photo-card-name" data-en="Full Broast (8 pcs)">فرخة كاملة — 8 قطع</div><div class="menu-photo-card-price">500 ج</div></div></div>
+          </div>
+        </div>
+
+        <!-- Kids Meals -->
+        <div class="menu-subsection">
+          <div class="menu-subsection-title" data-en="Kids Meals">وجبات الأطفال</div>
+          <p style="font-size:0.84rem;color:var(--text-light);margin-bottom:16px" data-en='"Your kids will love Wahet Al Yemen meals"'>"أطفالكم محبوكم أكتر مع وجبات واحة اليمن"</p>
+          <div class="menu-items-grid">
+            <div class="menu-item"><span class="menu-item-name" data-en="Al Shtour Meal">وجبة الشطور</span><span class="menu-item-price">180 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Al Batal Meal">وجبة البطل</span><span class="menu-item-price">190 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Al Saada Meal">وجبة السعادة</span><span class="menu-item-price">200 ج</span></div>
+          </div>
+        </div>
+
+        <!-- Special Oasis Meals -->
+        <div class="menu-subsection">
+          <div class="menu-subsection-title" data-en="Special Oasis Meals">وجبات أكيلة الواحة</div>
+          <div class="menu-deal-card">
+            <div class="menu-deal-header">
+              <span class="menu-deal-name" data-en="Al Madah Meal">وجبة المداح</span>
+              <span class="menu-deal-price">610 ج</span>
+            </div>
+            <p class="menu-deal-contents">نفر مندي + ربع كفتة + أرز + بطاطس + شورية لسان عصفور + 1 سمبوسك لحم + سلطة + سحاوق</p>
+          </div>
+          <div class="menu-deal-card">
+            <div class="menu-deal-header">
+              <span class="menu-deal-name" data-en="Al Fahad Meal">وجبة فهد البطل</span>
+              <span class="menu-deal-price">600 ج</span>
+            </div>
+            <p class="menu-deal-contents">ربع ك كفتة + ربع ك شيش طاووق + ثمن ك سجق + حواوشي + محاشي مشكل + 2 شورية لسان عصفور + سلطة + 2 سمبوسك لحم + سحاوق</p>
+          </div>
+          <div class="menu-deal-card">
+            <div class="menu-deal-header">
+              <span class="menu-deal-name" data-en="Setti Meal">وجبة طاجن ستي</span>
+              <span class="menu-deal-price">230 ج</span>
+            </div>
+            <p class="menu-deal-contents">طاجن لحم بالبصل + أرز + شورية لسان عصفور + سلطة + سحاوق</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======== DESSERTS ======== -->
+      <div class="menu-section" id="sec-desserts">
+        <div class="menu-section-header">
+          <h2 class="menu-section-title" data-en="Desserts">الحلويات</h2>
+          <p class="menu-section-sub" data-en='"The sweetest end — round and round at Wahet"'>"الحلى سمني للحلوين، رونو ورونو في الواحة"</p>
+        </div>
+
+        <div class="menu-subsection">
+          <div class="menu-subsection-title" data-en="Konafa">كنافة</div>
+          <div class="menu-photo-grid">
+            <div class="menu-photo-card">
+              <div class="menu-photo-card-slot"><div class="menu-photo-card-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div>
+              <div class="menu-photo-card-body"><div class="menu-photo-card-name" data-en="Konafa with Cream">كنافة بالقشطة</div><div class="menu-photo-card-price">70 ج</div></div>
+            </div>
+            <div class="menu-photo-card">
+              <div class="menu-photo-card-slot"><div class="menu-photo-card-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div>
+              <div class="menu-photo-card-body"><div class="menu-photo-card-name" data-en="Konafa with Nutella">كنافة بالنوتيلا</div><div class="menu-photo-card-price">75 ج</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-subsection">
+          <div class="menu-subsection-title" data-en="Fetah (Yemeni Bread Dessert)">فتة</div>
+          <div class="menu-photo-grid">
+            <div class="menu-photo-card">
+              <div class="menu-photo-card-slot"><div class="menu-photo-card-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div>
+              <div class="menu-photo-card-body"><div class="menu-photo-card-name" data-en="Fetah with Dates">فتة تمر</div><div class="menu-photo-card-price">70 ج</div></div>
+            </div>
+            <div class="menu-photo-card">
+              <div class="menu-photo-card-slot"><div class="menu-photo-card-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div>
+              <div class="menu-photo-card-body"><div class="menu-photo-card-name" data-en="Fetah with Banana">فتة موز</div><div class="menu-photo-card-price">60 ج</div></div>
+            </div>
+            <div class="menu-photo-card">
+              <div class="menu-photo-card-slot"><div class="menu-photo-card-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div>
+              <div class="menu-photo-card-body"><div class="menu-photo-card-name" data-en="Fetah Plain">فتة سادة</div><div class="menu-photo-card-price">40 ج</div></div>
+            </div>
+            <div class="menu-photo-card">
+              <div class="menu-photo-card-slot"><div class="menu-photo-card-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div>
+              <div class="menu-photo-card-body"><div class="menu-photo-card-name" data-en="Fetah with Kibbeh">فتة تمر كيسة</div><div class="menu-photo-card-price">110 ج</div></div>
+            </div>
+            <div class="menu-photo-card">
+              <div class="menu-photo-card-slot"><div class="menu-photo-card-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div>
+              <div class="menu-photo-card-body"><div class="menu-photo-card-name" data-en="Fetah Mixed">فتة ميكس</div><div class="menu-photo-card-price">130 ج</div></div>
+            </div>
+            <div class="menu-photo-card">
+              <div class="menu-photo-card-slot"><div class="menu-photo-card-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div>
+              <div class="menu-photo-card-body"><div class="menu-photo-card-name" data-en="Fetah Honey">فتة عسل</div><div class="menu-photo-card-price">110 ج</div></div>
+            </div>
+            <div class="menu-photo-card">
+              <div class="menu-photo-card-slot"><div class="menu-photo-card-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div>
+              <div class="menu-photo-card-body"><div class="menu-photo-card-name" data-en="Fetah Zabadi">فتة زبادي</div><div class="menu-photo-card-price">130 ج</div></div>
+            </div>
+            <div class="menu-photo-card">
+              <div class="menu-photo-card-slot"><div class="menu-photo-card-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div>
+              <div class="menu-photo-card-body"><div class="menu-photo-card-name" data-en="Fetah Milk Royal">فتة زبادي ملكي</div><div class="menu-photo-card-price">160 ج</div></div>
+            </div>
+            <div class="menu-photo-card">
+              <div class="menu-photo-card-slot"><div class="menu-photo-card-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div>
+              <div class="menu-photo-card-body"><div class="menu-photo-card-name" data-en="Fetah Dates Hersh">فتة تمر جرش</div><div class="menu-photo-card-price">70 ج</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-subsection">
+          <div class="menu-subsection-title" data-en="Areeka (Yemeni Bread Pudding)">عريكة — وجبات البقلاوة</div>
+          <div class="menu-photo-grid">
+            <div class="menu-photo-card">
+              <div class="menu-photo-card-slot"><div class="menu-photo-card-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div>
+              <div class="menu-photo-card-body"><div class="menu-photo-card-name" data-en="Areeka with Cream">عريكة ملكي بالقشطة</div><div class="menu-photo-card-price">140 ج</div></div>
+            </div>
+            <div class="menu-photo-card">
+              <div class="menu-photo-card-slot"><div class="menu-photo-card-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div>
+              <div class="menu-photo-card-body"><div class="menu-photo-card-name" data-en="Areeka with Nutella">عريكة ملكي بالنوتيلا</div><div class="menu-photo-card-price">160 ج</div></div>
+            </div>
+            <div class="menu-photo-card">
+              <div class="menu-photo-card-slot"><div class="menu-photo-card-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div>
+              <div class="menu-photo-card-body"><div class="menu-photo-card-name" data-en="Areeka with Fruits">عريكة ملكي فواكه</div><div class="menu-photo-card-price">160 ج</div></div>
+            </div>
+            <div class="menu-photo-card">
+              <div class="menu-photo-card-slot"><div class="menu-photo-card-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div>
+              <div class="menu-photo-card-body"><div class="menu-photo-card-name" data-en="Areeka Oasis (Cream+Nutella)">عريكة واحة اليمن قشطة + نوتيلا</div><div class="menu-photo-card-price">170 ج</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-subsection">
+          <div class="menu-subsection-title" data-en="Maqsoob & Bint Al Sahn">مقصوب وبنت الصحن</div>
+          <div class="menu-photo-grid">
+            <div class="menu-photo-card">
+              <div class="menu-photo-card-slot"><div class="menu-photo-card-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div>
+              <div class="menu-photo-card-body"><div class="menu-photo-card-name" data-en="Maqsoob with Cream">معصوب ملكي بالقشطة</div><div class="menu-photo-card-price">150 ج</div></div>
+            </div>
+            <div class="menu-photo-card">
+              <div class="menu-photo-card-slot"><div class="menu-photo-card-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div>
+              <div class="menu-photo-card-body"><div class="menu-photo-card-name" data-en="Maqsoob with Nutella">معصوب ملكي بالنوتيلا</div><div class="menu-photo-card-price">150 ج</div></div>
+            </div>
+            <div class="menu-photo-card">
+              <div class="menu-photo-card-slot"><div class="menu-photo-card-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div>
+              <div class="menu-photo-card-body"><div class="menu-photo-card-name" data-en="Maqsoob with Fruits">معصوب ملكي فواكه</div><div class="menu-photo-card-price">150 ج</div></div>
+            </div>
+            <div class="menu-photo-card">
+              <div class="menu-photo-card-slot"><div class="menu-photo-card-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div>
+              <div class="menu-photo-card-body"><div class="menu-photo-card-name" data-en="Maqsoob Oasis (Cream+Nutella)">معصوب واحة اليمن قشطة + نوتيلا</div><div class="menu-photo-card-price">160 ج</div></div>
+            </div>
+            <div class="menu-photo-card">
+              <div class="menu-photo-card-slot"><div class="menu-photo-card-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div>
+              <div class="menu-photo-card-body"><div class="menu-photo-card-name" data-en="Bint Al Sahn Piece">قطعة بنت الصحن</div><div class="menu-photo-card-price">65 ج</div></div>
+            </div>
+            <div class="menu-photo-card">
+              <div class="menu-photo-card-slot"><div class="menu-photo-card-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div>
+              <div class="menu-photo-card-body"><div class="menu-photo-card-name" data-en="Bint Al Sahn Full Tray">طبق بنت الصحن كامل</div><div class="menu-photo-card-price">325 ج</div></div>
+            </div>
+            <div class="menu-photo-card">
+              <div class="menu-photo-card-slot"><div class="menu-photo-card-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div>
+              <div class="menu-photo-card-body"><div class="menu-photo-card-name" data-en="Harisah Yamania">هريسة يمنية</div><div class="menu-photo-card-price">60 ج</div></div>
+            </div>
+            <div class="menu-photo-card">
+              <div class="menu-photo-card-slot"><div class="menu-photo-card-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div></div>
+              <div class="menu-photo-card-body"><div class="menu-photo-card-name" data-en="Marsah Yamania">مرسة يمني</div><div class="menu-photo-card-price">110 ج</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-subsection">
+          <div class="menu-subsection-title" data-en="Sidr Honey">عسل السدر</div>
+          <div class="menu-items-grid">
+            <div class="menu-item"><span class="menu-item-name" data-en="Sidr Honey Portion">نفر عسل سدر جبلي</span><span class="menu-item-price">50 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Quarter Kilo Sidr Honey">ربع كيلو عسل سدر</span><span class="menu-item-price">250 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Half Kilo Sidr Honey">نصف كيلو عسل سدر</span><span class="menu-item-price">500 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="One Kilo Sidr Honey">كيلو عسل سدر جبلي</span><span class="menu-item-price">1,000 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Half Kilo Sidr (Mountain) Honey">نصف كيلو عسل سدر جبلي</span><span class="menu-item-price">500 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Kilo Sidr (Mountain) Honey">كيلو عسل سدر جبلي</span><span class="menu-item-price">1,000 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Al Shaabiyat">الشعبيات</span><span class="menu-item-price">40 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Rawabi">روالبي</span><span class="menu-item-price">40 ج</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======== DRINKS ======== -->
+      <div class="menu-section" id="sec-drinks">
+        <div class="menu-section-header">
+          <h2 class="menu-section-title" data-en="Drinks & Beverages">المشروبات</h2>
+        </div>
+
+        <div class="menu-subsection">
+          <div class="menu-subsection-title" data-en="Hot Beverages">المشروبات الساخنة</div>
+          <div class="drinks-grid">
+            <div class="menu-item"><span class="menu-item-name" data-en="Red Tea (cup)">كوب شاي أحمر</span><span class="menu-item-price">25 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Green Tea (cup)">كوب شاي أخضر</span><span class="menu-item-price">25 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Adeni Milk Tea">كوب شاي حليب عدني</span><span class="menu-item-price">35 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Large Red Tea Pot">براد شاي أحمر كبير</span><span class="menu-item-price">120 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Large Milk Tea Pot">براد شاي حليب عدني كبير</span><span class="menu-item-price">140 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Turkish Coffee Sinjel">قهوة تركي سينجل</span><span class="menu-item-price">35 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Turkish Coffee Double">قهوة تركي دوبل</span><span class="menu-item-price">45 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="French Coffee">قهوة فرنساوي</span><span class="menu-item-price">35 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Nescafe">نسكافيه</span><span class="menu-item-price">35 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Zanjabeel">زنجبيل</span><span class="menu-item-price">25 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Yansoon">يانسون</span><span class="menu-item-price">25 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Arabic Coffee with Dates (wet)">كوب قهوة عربي + تمر رطب</span><span class="menu-item-price">50 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Dala Arabic Coffee (wet)">دلة قهوة عربي + تمر رطب</span><span class="menu-item-price">200 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Saudi Dates">تمر رطب سعودي</span><span class="menu-item-price">40 ج</span></div>
+          </div>
+        </div>
+
+        <div class="menu-subsection">
+          <div class="menu-subsection-title" data-en="Water & Soft Drinks">مياه ومشروبات غازية</div>
+          <div class="drinks-grid">
+            <div class="menu-item"><span class="menu-item-name" data-en="Mineral Water">مياه معدنية</span><span class="menu-item-price">10 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Pepsi">بيبسي</span><span class="menu-item-price">23 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="7Up">سفن أب</span><span class="menu-item-price">23 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Miranda">ميراندا</span><span class="menu-item-price">23 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="V7 Cola">V7 Cola</span><span class="menu-item-price">23 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Redbull">ريدبول</span><span class="menu-item-price">65 ج</span></div>
+          </div>
+        </div>
+
+        <div class="menu-subsection">
+          <div class="menu-subsection-title" data-en="Natural Juices">عصائر طبيعية</div>
+          <div class="drinks-grid">
+            <div class="menu-item"><span class="menu-item-name" data-en="Araisei">عرايسي</span><span class="menu-item-price">120 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Fakhfakhina">فخفخينة</span><span class="menu-item-price">120 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Guava">جوافة</span><span class="menu-item-price">70 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Orange">برتقال</span><span class="menu-item-price">70 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Guava with Milk">جوافة حليب</span><span class="menu-item-price">70 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Avocado Plain">أفوكادو</span><span class="menu-item-price">120 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Avocado with Honey">أفوكادو عسل</span><span class="menu-item-price">130 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Avocado with Kiwi">أفوكادو كيوي</span><span class="menu-item-price">130 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Avocado with Mango">أفوكادو مانجو</span><span class="menu-item-price">130 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Mango">مانجو</span><span class="menu-item-price">80 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Lemon">ليمون</span><span class="menu-item-price">45 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Lemon Mint">ليمون بالنعناع</span><span class="menu-item-price">50 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Lemon Milk">ليمون حليب</span><span class="menu-item-price">50 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Apple">تفاح</span><span class="menu-item-price">70 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Pomegranate">رمان</span><span class="menu-item-price">60 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Carrot">جزر</span><span class="menu-item-price">60 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Banana Milk">موز حليب</span><span class="menu-item-price">45 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Strawberry Milk">فراولة حليب</span><span class="menu-item-price">75 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Guava Milk">جوافة حليب</span><span class="menu-item-price">75 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Orange Milk">برتقال حليب</span><span class="menu-item-price">75 ج</span></div>
+          </div>
+        </div>
+
+        <div class="menu-subsection">
+          <div class="menu-subsection-title" data-en="Smoothies">عصائر اسموزي</div>
+          <div class="drinks-grid">
+            <div class="menu-item"><span class="menu-item-name" data-en="Lemon Smoothie">ليمون</span><span class="menu-item-price">80 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Lemon Mint Smoothie">ليمون بالنعناع</span><span class="menu-item-price">85 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Mango Smoothie">مانجو</span><span class="menu-item-price">85 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Blueberry Smoothie">بلوبيري</span><span class="menu-item-price">85 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Mango Kiwi Smoothie">مانجو كيوي</span><span class="menu-item-price">90 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Pashon Froote Smoothie">باشون فروت</span><span class="menu-item-price">85 ج</span></div>
+            <div class="menu-item"><span class="menu-item-name" data-en="Strawberry Smoothie">فراولة</span><span class="menu-item-price">85 ج</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CTA BANNER -->
+  <section class="section-cta-banner">
+    <div class="cta-pattern"></div>
+    <div class="container cta-content">
+      <h2 data-en="Ready to Order?">جاهز تطلب؟</h2>
+      <p data-en="Call us now and enjoy Wahet Al Yemen at home.">اتصل بنا الآن واستمتع بواحة اليمن في بيتك.</p>
+      <div class="cta-phones">
+        <div class="cta-phone-group">
+          <span class="cta-phone-label" data-en="Mohandessin">المهندسين</span>
+          <a href="tel:01112223232" class="cta-phone-number">01112223232</a>
+        </div>
+        <div class="cta-divider"></div>
+        <div class="cta-phone-group">
+          <span class="cta-phone-label" data-en="Sheikh Zayed">الشيخ زايد</span>
+          <a href="tel:01118883232" class="cta-phone-number">01118883232</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-pattern"></div>
+    <div class="container footer-content">
+      <div class="footer-main">
+        <div class="footer-brand">
+          <img src="brand_assets/263050197_102917078909985_2041387502624040699_n (1).jpg" alt="واحة اليمن" class="footer-logo">
+          <p class="footer-tagline" data-en="Live the Yemeni Experience">عيش التجربة اليمنية</p>
+          <p class="footer-desc" data-en="Yemeni · Egyptian · Gulf Cuisine">للمأكولات اليمنية والمصرية والخليجية</p>
+        </div>
+        <div class="footer-links-col">
+          <h4 data-en="Quick Links">روابط سريعة</h4>
+          <ul>
+            <li><a href="index.html" data-en="Home">الرئيسية</a></li>
+            <li><a href="menu.html" data-en="Menu">القائمة</a></li>
+            <li><a href="branches.html" data-en="Branches">الفروع</a></li>
+          </ul>
+        </div>
+        <div class="footer-links-col">
+          <h4 data-en="Follow Us">تابعونا</h4>
+          <ul>
+            <li><a href="https://www.facebook.com/wahetyemen/" target="_blank" rel="noopener">Facebook</a></li>
+            <li><a href="https://www.instagram.com/WahetYemen" target="_blank" rel="noopener">Instagram</a></li>
+            <li><a href="https://www.snapchat.com/@wahetelyemen" target="_blank" rel="noopener">Snapchat</a></li>
+            <li><a href="https://www.tiktok.com/@wahetyemen" target="_blank" rel="noopener">TikTok</a></li>
+          </ul>
+        </div>
+        <div class="footer-links-col">
+          <h4 data-en="Order">اطلب</h4>
+          <ul>
+            <li><a href="tel:01112223232">01112223232</a></li>
+            <li><a href="tel:01118883232">01118883232</a></li>
+            <li><a href="tel:01119381118">01119381118 (شكاوى)</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 <span data-en="Wahet Al Yemen Restaurant">مطعم واحة اليمن</span></p>
+        <p class="footer-note" data-en="Prices include service · Live band free in dining hall">الأسعار شاملة الخدمة · الفرقة مجاناً في الصالة</p>
+      </div>
+    </div>
+  </footer>
+
+  <a href="tel:01112223232" class="floating-order" data-order-modal aria-label="اطلب الآن">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L6.91 8.92a16 16 0 006.17 6.17l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0122 16.92z"/></svg>
+    <span data-en="Order Now">اطلب الآن</span>
+  </a>
+  <button class="back-to-top" id="backToTop" aria-label="العودة للأعلى">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+  </button>
+
+  <!-- ==================== ORDER MODAL ==================== -->
+  <div id="orderModal" class="order-modal" role="dialog" aria-modal="true" aria-labelledby="orderModalTitle">
+    <div class="order-modal-backdrop"></div>
+    <div class="order-modal-dialog">
+      <div class="order-step" id="orderStep1">
+        <div class="order-modal-header">
+          <button class="order-modal-close" aria-label="إغلاق">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+          <h2 id="orderModalTitle" data-en="How would you like to order?">كيف تريد أن تطلب؟</h2>
+          <p data-en="Choose your preferred way to reach us">اختر الطريقة المفضلة لديك</p>
+        </div>
+        <div class="order-modal-body">
+          <div class="order-method-grid">
+            <button class="order-method-btn" id="btnCallMethod">
+              <div class="order-method-icon call-icon">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L6.91 8.92a16 16 0 006.17 6.17l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0122 16.92z"/></svg>
+              </div>
+              <span class="order-method-label" data-en="Call to Order">اتصل للطلب</span>
+              <span class="order-method-desc" data-en="Speak directly with our team">تحدث مباشرة مع فريقنا</span>
+            </button>
+            <button class="order-method-btn" id="btnWhatsappMethod">
+              <div class="order-method-icon wa-icon">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              </div>
+              <span class="order-method-label" data-en="Order via WhatsApp">اطلب عبر واتساب</span>
+              <span class="order-method-desc" data-en="Chat with us on WhatsApp">راسلنا على واتساب</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="order-step" id="orderStep2" hidden>
+        <div class="order-modal-header">
+          <button class="order-modal-close" aria-label="إغلاق">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+          <h2 id="orderStep2Title">اختر الفرع</h2>
+        </div>
+        <div class="order-modal-body">
+          <button class="order-modal-back" id="orderModalBack">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+            <span data-en="Back">رجوع</span>
+          </button>
+          <div class="order-branch-list" id="orderBranchList"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
