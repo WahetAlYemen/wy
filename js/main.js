@@ -481,19 +481,25 @@ function initHeroVideo() {
   const video = document.querySelector('.hero-yt-wrap video');
   if (!video) return;
 
-  // iOS requires muted set via JS property, not just attribute
-  video.muted = true;
-
   const tryPlay = () => {
+    video.muted = true;      // must be set as JS property on iOS
+    video.playsInline = true;
     if (video.paused) video.play().catch(() => {});
   };
 
   tryPlay();
-  video.addEventListener('canplay', tryPlay, { once: true });
-  // Last resort: play on first user touch (iOS Low Power Mode)
-  ['touchstart', 'touchend'].forEach(e =>
-    document.addEventListener(e, tryPlay, { once: true, passive: true })
+
+  // Retry on every buffering milestone
+  ['loadedmetadata', 'loadeddata', 'canplay', 'canplaythrough'].forEach(evt =>
+    video.addEventListener(evt, tryPlay, { once: true })
   );
+
+  // Keep retrying every 400ms until it plays (handles slow iOS start)
+  let attempts = 0;
+  const poll = setInterval(() => {
+    if (!video.paused || ++attempts > 15) { clearInterval(poll); return; }
+    tryPlay();
+  }, 400);
 }
 
 // INIT
