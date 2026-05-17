@@ -427,6 +427,52 @@ function initOrderModal() {
 }
 
 // ========================
+// BRANCH SLIDESHOW
+// ========================
+function initSlideshows() {
+  document.querySelectorAll('.branch-slideshow').forEach(ss => {
+    const slides = ss.querySelectorAll('.slideshow-slide');
+    const dots   = ss.querySelectorAll('.slideshow-dot');
+    if (!slides.length) return;
+    let current = 0;
+    let timer;
+
+    function goTo(n) {
+      slides[current].classList.remove('active');
+      if (dots[current]) dots[current].classList.remove('active');
+      current = ((n % slides.length) + slides.length) % slides.length;
+      slides[current].classList.add('active');
+      if (dots[current]) dots[current].classList.add('active');
+    }
+
+    const start = () => { timer = setInterval(() => goTo(current + 1), 4500); };
+    const stop  = () => clearInterval(timer);
+
+    dots.forEach(dot => {
+      dot.addEventListener('click', () => { stop(); goTo(+dot.dataset.index); start(); });
+    });
+
+    const prev = ss.querySelector('.slideshow-prev');
+    const next = ss.querySelector('.slideshow-next');
+    if (prev) prev.addEventListener('click', () => { stop(); goTo(current - 1); start(); });
+    if (next) next.addEventListener('click', () => { stop(); goTo(current + 1); start(); });
+
+    ss.addEventListener('mouseenter', stop);
+    ss.addEventListener('mouseleave', start);
+
+    let tx = 0;
+    ss.addEventListener('touchstart', e => { tx = e.touches[0].clientX; stop(); }, { passive: true });
+    ss.addEventListener('touchend',   e => {
+      const dx = e.changedTouches[0].clientX - tx;
+      if (Math.abs(dx) > 40) goTo(current + (dx < 0 ? 1 : -1));
+      start();
+    }, { passive: true });
+
+    start();
+  });
+}
+
+// ========================
 // INIT
 // ========================
 document.addEventListener('DOMContentLoaded', () => {
@@ -453,6 +499,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initBranchSelector();
   initSmoothScroll();
   initOrderModal();
+  initSlideshows();
 
   // Page load animation for page hero
   const pageHero = document.querySelector('.page-hero');
