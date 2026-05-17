@@ -1884,34 +1884,77 @@ body.en .about-grid { direction: ltr; }
 /* ========================
    MOBILE IMPROVEMENTS
 ======================== */
+
+/* ── Video: hide YouTube on mobile, use photo background instead ──
+   iOS & Android block iframe autoplay — static photo is the fix */
+@media (max-width: 768px) {
+  .hero-yt-wrap { display: none; }
+  .hero-bg { background: url('../photos/5.jpeg') center 30% / cover no-repeat; }
+  /* Fix 100vh bug where mobile browser chrome overlaps the hero */
+  .hero { min-height: 100vh; min-height: 100svh; }
+}
+
 @media (max-width: 900px) {
   .menu-photo-grid { grid-template-columns: repeat(auto-fill, minmax(145px, 1fr)); gap: 12px; }
 }
+
 @media (max-width: 768px) {
+  /* Menu grids */
   .menu-photo-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
   .chicken-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
-  .about-logo-frame { max-width: 320px !important; }
-  .about-visual { max-width: 360px !important; }
-  .branch-slideshow { aspect-ratio: 4 / 3; }
   .menu-photo-card-body { padding: 9px 11px; }
   .menu-photo-card-name { font-size: 0.82rem; }
   .menu-photo-card-price { font-size: 0.78rem; }
   .menu-section-title { font-size: 1.25rem; }
   .menu-nav { padding: 0 12px; }
   .menu-tab { font-size: 0.78rem; padding: 8px 12px; }
-  .social-cards-grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* About */
+  .about-logo-frame { max-width: 320px !important; }
+  .about-visual { max-width: 360px !important; }
+
+  /* Dish cards — smaller image height on mobile */
+  .dish-card-img-wrap { height: 220px; }
   .dishes-grid { grid-template-columns: repeat(2, 1fr); }
+  .social-cards-grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* Slideshow */
+  .branch-slideshow { aspect-ratio: 4 / 3; }
+  /* Make arrows always visible on touch (hover doesn't exist on mobile) */
+  .slideshow-prev, .slideshow-next { opacity: 0.75; }
+
+  /* Hero content tighter */
+  .hero-badge { font-size: 0.71rem; padding: 5px 16px; margin-bottom: 14px; }
+  .hero-tagline { margin-bottom: 28px; font-size: clamp(1.1rem, 4.5vw, 1.6rem); }
+  .hero-actions { gap: 10px; margin-bottom: 30px; }
+  .hero-phone { font-size: 0.88rem; }
+
+  /* Tighter section spacing */
+  .section { padding: 60px 0; }
 }
+
 @media (max-width: 480px) {
+  /* Menu */
   .menu-photo-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
   .chicken-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .menu-tab { font-size: 0.72rem; padding: 7px 10px; }
+  .menu-section-title { font-size: 1.1rem; }
+  .section-title { font-size: 1.35rem; }
+
+  /* About */
   .about-logo-frame { max-width: 260px !important; }
   .about-visual { max-width: 300px !important; }
+
+  /* Dishes: 1 col + taller image when full width */
   .dishes-grid { grid-template-columns: 1fr; }
-  .menu-tab { font-size: 0.72rem; padding: 7px 10px; }
+  .dish-card-img-wrap { height: 250px; }
+
+  /* Hero */
   .hero-title { font-size: clamp(1.8rem, 11vw, 2.8rem); }
-  .section-title { font-size: 1.35rem; }
-  .menu-section-title { font-size: 1.1rem; }
+  .hero-actions .btn { width: min(100%, 260px); }
+  .section { padding: 48px 0; }
+
+  /* Floating order button becomes icon-only */
   .floating-order span { display: none; }
   .floating-order { padding: 0; width: 52px; border-radius: 50%; justify-content: center; }
 }
