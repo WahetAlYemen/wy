@@ -1886,14 +1886,13 @@ body.en .about-grid { direction: ltr; }
 }
 @media (max-width: 768px) {
   .menu-photo-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
-  .chicken-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .chicken-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
   .about-logo-frame { max-width: 320px !important; }
   .about-visual { max-width: 360px !important; }
   .branch-slideshow { aspect-ratio: 4 / 3; }
   .menu-photo-card-body { padding: 9px 11px; }
   .menu-photo-card-name { font-size: 0.82rem; }
   .menu-photo-card-price { font-size: 0.78rem; }
-  .menu-deal-card-photo { margin: -22px -20px 14px; width: calc(100% + 40px); }
   .menu-section-title { font-size: 1.25rem; }
   .menu-nav { padding: 0 12px; }
   .menu-tab { font-size: 0.78rem; padding: 8px 12px; }
@@ -1902,7 +1901,7 @@ body.en .about-grid { direction: ltr; }
 }
 @media (max-width: 480px) {
   .menu-photo-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
-  .chicken-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .chicken-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
   .about-logo-frame { max-width: 260px !important; }
   .about-visual { max-width: 300px !important; }
   .dishes-grid { grid-template-columns: 1fr; }

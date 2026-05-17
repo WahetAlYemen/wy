@@ -96,8 +96,8 @@
     /* Chicken table */
     .chicken-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 14px;
     }
     .chicken-item {
       background: var(--off-white);
@@ -110,8 +110,8 @@
     .chicken-price-row:last-child { border-bottom: none; }
     .chicken-price-row span:last-child { font-weight: 700; color: var(--gold-dark); }
 
-    @media (max-width: 600px) {
-      .chicken-grid { grid-template-columns: 1fr; }
+    @media (max-width: 400px) {
+      .chicken-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
     }
 
     /* Fish note */
@@ -339,8 +339,11 @@
           <p class="menu-section-sub" data-en="Slow-cooked to perfection — the finest Yemeni dining experience">"تتذوق أفضل مندي تسحك بلحم التيس اللياني الصغير"</p>
         </div>
 
-        <div style="width:100%;aspect-ratio:16/9;overflow:hidden;border-radius:14px;margin-bottom:24px;">
-          <img src="photos/نفر لحم مندي.jpeg" alt="نفر لحم مندي" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;">
+        <div class="menu-photo-grid" style="margin-bottom:20px;">
+          <div class="menu-photo-card">
+            <div class="menu-photo-card-slot"><div class="menu-photo-card-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div><img src="photos/نفر لحم مندي.jpeg" alt="نفر لحم مندي" loading="lazy"></div>
+            <div class="menu-photo-card-body"><div class="menu-photo-card-name" data-en="Per Person Mandi">نفر لحم مندي</div><div class="menu-photo-card-price">475 ج</div></div>
+          </div>
         </div>
 
         <table class="price-table">
@@ -742,7 +745,7 @@
         </div>
 
         <div class="menu-deal-card">
-          <div class="menu-deal-card-photo"><img src="photos/صينية الاصدقاء.jpeg" alt="صينية الأصدقاء" loading="lazy"></div>
+          <div style="width:150px;aspect-ratio:1/1;overflow:hidden;border-radius:10px;margin-bottom:14px;"><img src="photos/صينية الاصدقاء.jpeg" alt="صينية الأصدقاء" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
           <div class="menu-deal-header">
             <span class="menu-deal-name" data-en="Friends Tray - 3 Persons">صينية الأصدقاء — 3 أفراد</span>
             <span class="menu-deal-persons" data-en="3 Persons">3 أفراد</span>
@@ -815,7 +818,7 @@
         </div>
 
         <div class="menu-deal-card">
-          <div class="menu-deal-card-photo"><img src="photos/وجبة توفير.jpeg" alt="وجبة التوفير" loading="lazy"></div>
+          <div style="width:150px;aspect-ratio:1/1;overflow:hidden;border-radius:10px;margin-bottom:14px;"><img src="photos/وجبة توفير.jpeg" alt="وجبة التوفير" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
           <div class="menu-deal-header">
             <span class="menu-deal-name" data-en="Savings Meal — Individual">وجبة التوفير — فرد</span>
             <span class="menu-deal-persons" data-en="1 Person">1 فرد</span>
@@ -1131,8 +1134,11 @@
 
         <div class="menu-subsection">
           <div class="menu-subsection-title" data-en="Smoothies">عصائر اسموزي</div>
-          <div style="width:100%;aspect-ratio:16/9;overflow:hidden;border-radius:12px;margin-bottom:14px;">
-            <img src="photos/عصائر سموزي.jpeg" alt="عصائر سموزي" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;">
+          <div class="menu-photo-grid" style="margin-bottom:14px;">
+            <div class="menu-photo-card">
+              <div class="menu-photo-card-slot"><div class="menu-photo-card-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>صورة</span></div><img src="photos/عصائر سموزي.jpeg" alt="عصائر سموزي" loading="lazy"></div>
+              <div class="menu-photo-card-body"><div class="menu-photo-card-name" data-en="Smoothies">سموزي</div></div>
+            </div>
           </div>
           <div class="drinks-grid">
             <div class="menu-item"><span class="menu-item-name" data-en="Lemon Smoothie">ليمون</span><span class="menu-item-price">80 ج</span></div>
