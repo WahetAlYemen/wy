@@ -445,7 +445,8 @@ function initSlideshows() {
       if (dots[current]) dots[current].classList.add('active');
     }
 
-    const start = () => { timer = setInterval(() => goTo(current + 1), 4500); };
+    const interval = parseInt(ss.dataset.interval) || 4500;
+    const start = () => { timer = setInterval(() => goTo(current + 1), interval); };
     const stop  = () => clearInterval(timer);
 
     dots.forEach(dot => {

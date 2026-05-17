@@ -452,7 +452,10 @@ input, textarea, select { font-family: inherit; }
   transform: translate(-50%, -50%);
   border: none;
   pointer-events: none;
+  opacity: 0;
+  animation: ytReveal 0.8s ease 1.8s forwards;
 }
+@keyframes ytReveal { to { opacity: 1; } }
 
 /* Dark tint + Yemeni color grading over the video */
 .hero-bg::before {
@@ -2222,7 +2225,7 @@ body.en .about-grid { direction: ltr; }
 .order-modal-dialog {
   position: relative;
   width: 100%;
-  max-width: 460px;
+  max-width: 680px;
   background: var(--off-white);
   border-radius: 24px;
   overflow: hidden;
@@ -2367,7 +2370,8 @@ body.en .about-grid { direction: ltr; }
 .order-modal-back:hover { color: var(--brown-mid); }
 body:not(.en) .order-modal-back svg { transform: scaleX(-1); }
 
-.order-branch-list { display: flex; flex-direction: column; gap: 14px; }
+.order-branch-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+@media (max-width: 540px) { .order-branch-list { grid-template-columns: 1fr; } }
 
 .order-branch-card {
   background: var(--cream);
