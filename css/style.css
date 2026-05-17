@@ -1885,12 +1885,8 @@ body.en .about-grid { direction: ltr; }
    MOBILE IMPROVEMENTS
 ======================== */
 
-/* ── Video: hide YouTube on mobile, use photo background instead ──
-   iOS & Android block iframe autoplay — static photo is the fix */
+/* Fix 100vh bug where mobile browser chrome overlaps the hero */
 @media (max-width: 768px) {
-  .hero-yt-wrap { display: none; }
-  .hero-bg { background: url('../photos/5.jpeg') center 30% / cover no-repeat; }
-  /* Fix 100vh bug where mobile browser chrome overlaps the hero */
   .hero { min-height: 100vh; min-height: 100svh; }
 }
 
