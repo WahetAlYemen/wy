@@ -215,9 +215,12 @@
   }
 
   /* ============================================================
-     WHATSAPP SUBMISSION
+     TELEGRAM ORDER SUBMISSION
   ============================================================ */
-  function submitOrder() {
+  const TG_TOKEN = '8797857878:AAHl4TKrBbynFwj9AHVj6zapFRzLYL3tgnk';
+  const TG_CHAT  = '-1003765202930';
+
+  async function submitOrder() {
     const phone = $('inp-phone')?.value.trim();
     const addr  = $('inp-addr')?.value.trim();
     let ok = true;
@@ -244,12 +247,35 @@
     msg += '💵 *الدفع:* كاش عند الاستلام\n';
     if (notes) msg += `📝 *ملاحظات:* ${notes}\n`;
 
-    window.open(`https://wa.me/${br.whatsapp}?text=${encodeURIComponent(msg)}`, '_blank');
-    clearCart();
-    closeModal();
-    ['inp-name', 'inp-phone', 'inp-addr', 'inp-notes'].forEach(id => {
-      if ($(id)) $(id).value = '';
-    });
+    const btn = $('submit-order');
+    if (btn) { btn.disabled = true; btn.textContent = 'جاري الإرسال...'; }
+
+    try {
+      const res = await fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id: TG_CHAT, text: msg, parse_mode: 'Markdown' })
+      });
+      const data = await res.json();
+      if (!data.ok) throw new Error(data.description);
+
+      if (btn) {
+        btn.textContent = '✓ تم إرسال طلبك بنجاح!';
+        btn.style.background = '#28a745';
+      }
+      setTimeout(() => {
+        clearCart();
+        closeModal();
+        ['inp-name', 'inp-phone', 'inp-addr', 'inp-notes'].forEach(id => {
+          if ($(id)) $(id).value = '';
+        });
+        if (btn) { btn.disabled = false; btn.textContent = 'أرسل الطلب'; btn.style.background = ''; }
+      }, 2500);
+
+    } catch (e) {
+      if (btn) { btn.disabled = false; btn.textContent = 'أرسل الطلب'; }
+      alert('حدث خطأ أثناء إرسال الطلب. تحقق من الاتصال وحاول مرة أخرى.');
+    }
   }
 
   /* ============================================================
