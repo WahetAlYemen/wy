@@ -116,7 +116,7 @@
     const cur = BRANCHES.find(b => b.id === cart.branch) || {};
     const el = $('conflict-msg');
     if (el) el.textContent =
-      `عربتك تحتوي على أصناف من فرع ${cur.name}. للطلب من فرع ${nb.name} يجب إفراغ العربة أولاً.`;
+      `عربتك تحتوي على أصناف من فرع ${cur.name}. هل تريد نقل العربة للفرع ${nb.name} (سيتم مسح طلبك الحالي)، أم تريد الاحتفاظ بطلبك من فرع ${cur.name}؟`;
     const sw = $('conflict-switch');
     if (sw) sw.onclick = () => {
       clearCart();
@@ -297,74 +297,22 @@
     const root = document.getElementById('menu-body');
     if (!root) return;
 
-    /* plain list items */
-    root.querySelectorAll('.menu-item').forEach(el => {
-      const name = el.querySelector('.menu-item-name')?.textContent.trim();
-      const priceEl = el.querySelector('.menu-item-price');
-      const price = px(priceEl?.textContent);
+    /* unified dish cards (new layout) */
+    root.querySelectorAll('.dish-card').forEach(el => {
+      const name  = el.querySelector('.menu-item-name')?.textContent.trim();
+      const price = px(el.querySelector('.menu-item-price')?.textContent);
       if (!name || !price) return;
       const id = uid();
       el.dataset.cartId = id;
-      el.appendChild(mkBtn(id, name, price));
+      const footer = el.querySelector('.dish-footer');
+      (footer || el).appendChild(mkBtn(id, name, price));
     });
 
-    /* photo cards */
-    root.querySelectorAll('.menu-photo-card').forEach(el => {
-      const name = el.querySelector('.menu-photo-card-name')?.textContent.trim();
-      const price = px(el.querySelector('.menu-photo-card-price')?.textContent);
-      if (!name || !price) return;
-      const id = uid();
-      el.dataset.cartId = id;
-      const body = el.querySelector('.menu-photo-card-body');
-      if (body) body.appendChild(mkBtn(id, name, price));
-    });
-
-    /* tray / meal cards */
-    root.querySelectorAll('.menu-tray-card').forEach(el => {
-      const name = el.querySelector('.menu-tray-card-name')?.textContent.trim();
-      const price = px(el.querySelector('.menu-tray-card-price')?.textContent.replace(/,/g, ''));
-      if (!name || !price) return;
-      const id = uid();
-      el.dataset.cartId = id;
-      const meta = el.querySelector('.menu-tray-card-meta');
-      if (meta) meta.appendChild(mkBtn(id, name, price));
-    });
-
-    /* chicken size rows */
-    root.querySelectorAll('.chicken-item').forEach(el => {
-      const base = (el.querySelector('.chicken-item-text h4') || el.querySelector('h4'))?.textContent.trim();
-      if (!base) return;
-      el.querySelectorAll('.chicken-price-row').forEach(row => {
-        const spans = row.querySelectorAll('span');
-        if (spans.length < 2) return;
-        const size  = spans[0].textContent.trim();
-        const price = px(spans[1].textContent);
-        if (!price) return;
-        const id  = uid();
-        const btn = mkBtn(id, `${base} — ${size}`, price);
-        btn.classList.add('add-btn-sm');
-        row.dataset.cartId = id;
-        row.appendChild(btn);
-      });
-    });
-
-    /* price tables */
-    root.querySelectorAll('.price-table').forEach(table => {
-      const hdrs = [...table.querySelectorAll('thead th')].map(t => t.textContent.trim());
-      table.querySelectorAll('tbody tr').forEach(row => {
-        const cells = [...row.querySelectorAll('td')];
-        if (!cells.length) return;
-        const name = cells[0].textContent.trim();
-        cells.slice(1).forEach((cell, i) => {
-          const price = px(cell.textContent);
-          if (!price) return;
-          const id  = uid();
-          const btn = mkBtn(id, `${name} — ${hdrs[i + 1] || ''}`, price);
-          btn.classList.add('add-btn-sm');
-          cell.style.whiteSpace = 'nowrap';
-          cell.appendChild(btn);
-        });
-      });
+    /* lazy-load real dish images */
+    root.querySelectorAll('.dish-img').forEach(img => {
+      if (!img.src || img.src === window.location.href) return;
+      if (img.complete && img.naturalWidth) { img.classList.add('loaded'); return; }
+      img.addEventListener('load', () => img.classList.add('loaded'), { once: true });
     });
   }
 
