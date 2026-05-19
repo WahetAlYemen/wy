@@ -49,7 +49,7 @@
 
   function removeItem(id) {
     cart.items = cart.items.filter(i => i.id !== id);
-    if (!cart.items.length) cart.branch = null;
+    if (!cart.items.length) { cart.branch = null; closeModal(); }
     save(); tick();
   }
 
@@ -67,16 +67,38 @@
   }
 
   /* ============================================================
-     BADGE
+     BADGE + BAR
   ============================================================ */
   function tick() {
     const n = count();
+
+    /* navbar badge */
     const badge = $('cart-badge');
     if (badge) {
       badge.textContent = n || '';
       badge.classList.toggle('has-items', n > 0);
     }
-    drawCart();
+
+    /* bottom bar */
+    renderBar(n);
+
+    /* if modal is already open, refresh cart contents */
+    const modal = $('cart-modal');
+    if (modal && modal.classList.contains('open') && !$('checkout-panel').classList.contains('open')) {
+      buildModalCart();
+    }
+  }
+
+  function renderBar(n) {
+    if (n === undefined) n = count();
+    const bar = $('cart-bar');
+    if (!bar) return;
+    bar.hidden = (n === 0);
+    if (!n) return;
+    const cnt = $('cart-bar-count');
+    const tot = $('cart-bar-total');
+    if (cnt) cnt.textContent = n + (n === 1 ? ' صنف' : ' أصناف');
+    if (tot) tot.textContent = total().toLocaleString('ar-EG') + ' ج';
   }
 
   function flash(id) {
@@ -108,39 +130,31 @@
   function closeConflict() { $('conflict-modal')?.classList.remove('open'); }
 
   /* ============================================================
-     CART DRAWER
+     CART MODAL
   ============================================================ */
-  function openDrawer() {
-    $('cart-drawer')?.classList.add('open');
-    $('cart-overlay')?.classList.add('open');
-    drawCart();
+  function openModal() {
+    if (!cart.items.length) return;
+    closeCheckout();
+    buildModalCart();
+    $('cart-modal')?.classList.add('open');
+    document.body.style.overflow = 'hidden';
   }
-  function closeDrawer() {
-    $('cart-drawer')?.classList.remove('open');
-    $('cart-overlay')?.classList.remove('open');
+
+  function closeModal() {
+    $('cart-modal')?.classList.remove('open');
+    document.body.style.overflow = '';
     closeCheckout();
   }
 
-  function drawCart() {
-    const body   = $('cart-body');
-    const footer = $('cart-footer');
+  function buildModalCart() {
+    const body = $('cart-modal-body');
     if (!body) return;
 
-    if (!cart.items.length) {
-      body.innerHTML = `
-        <div class="cart-empty">
-          <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
-            <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
-            <path d="M1 1h4l2.68 13.39A2 2 0 009.66 16h9.72a2 2 0 001.94-1.5l1.66-7.5H6"/>
-          </svg>
-          <p>العربة فارغة</p>
-          <span>اختر فرعاً وأضف أصنافاً</span>
-        </div>`;
-      if (footer) footer.hidden = true;
-      return;
-    }
+    if (!cart.items.length) { closeModal(); return; }
 
     const br = BRANCHES.find(b => b.id === cart.branch);
+    const tot = total();
+
     body.innerHTML = `
       <div class="cart-branch-tag">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor">
@@ -148,31 +162,33 @@
         </svg>
         فرع ${br ? br.name : ''}
       </div>
-      ${cart.items.map(i => `
-        <div class="cart-row">
-          <div class="cart-row-info">
-            <div class="cart-row-name">${i.name}</div>
-            <div class="cart-row-sub">
-              ${i.price.toLocaleString('ar-EG')} ج × ${i.qty}
-              = <b>${(i.price * i.qty).toLocaleString('ar-EG')} ج</b>
+      <div class="cart-items-list">
+        ${cart.items.map(i => `
+          <div class="cart-row">
+            <div class="cart-row-info">
+              <div class="cart-row-name">${i.name}</div>
+              <div class="cart-row-sub">
+                ${i.price.toLocaleString('ar-EG')} ج × ${i.qty}
+                = <b>${(i.price * i.qty).toLocaleString('ar-EG')} ج</b>
+              </div>
             </div>
-          </div>
-          <div class="cart-row-ctrl">
-            <button class="qty-btn" onclick="wyCart.updateQty('${i.id}',-1)">−</button>
-            <span class="qty-n">${i.qty}</span>
-            <button class="qty-btn" onclick="wyCart.updateQty('${i.id}',1)">+</button>
-            <button class="del-btn" title="حذف" onclick="wyCart.removeItem('${i.id}')">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                <path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/>
-              </svg>
-            </button>
-          </div>
-        </div>`).join('')}`;
-
-    if ($('cart-total-val')) $('cart-total-val').textContent = total().toLocaleString('ar-EG') + ' ج';
-    const fd = $('free-del-msg');
-    if (fd) fd.hidden = total() < FREE_DELIVERY_MIN;
-    if (footer) footer.hidden = false;
+            <div class="cart-row-ctrl">
+              <button class="qty-btn" onclick="wyCart.updateQty('${i.id}',-1)">−</button>
+              <span class="qty-n">${i.qty}</span>
+              <button class="qty-btn" onclick="wyCart.updateQty('${i.id}',1)">+</button>
+              <button class="del-btn" title="حذف" onclick="wyCart.removeItem('${i.id}')">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                  <path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/>
+                </svg>
+              </button>
+            </div>
+          </div>`).join('')}
+      </div>
+      <div class="cart-modal-total-row">
+        <span>الإجمالي</span>
+        <span class="cart-modal-total-val">${tot.toLocaleString('ar-EG')} ج</span>
+      </div>
+      ${tot >= FREE_DELIVERY_MIN ? '<div class="free-del-msg">توصيل مجاني لطلبات فوق 1000 جنيه ✓</div>' : ''}`;
   }
 
   /* ============================================================
@@ -230,7 +246,7 @@
 
     window.open(`https://wa.me/${br.whatsapp}?text=${encodeURIComponent(msg)}`, '_blank');
     clearCart();
-    closeDrawer();
+    closeModal();
     ['inp-name', 'inp-phone', 'inp-addr', 'inp-notes'].forEach(id => {
       if ($(id)) $(id).value = '';
     });
@@ -332,7 +348,7 @@
       });
     });
 
-    /* price tables (المشويات — multi-size) */
+    /* price tables */
     root.querySelectorAll('.price-table').forEach(table => {
       const hdrs = [...table.querySelectorAll('thead th')].map(t => t.textContent.trim());
       table.querySelectorAll('tbody tr').forEach(row => {
@@ -365,11 +381,12 @@
     injectButtons();
     tick();
 
-    $('cart-overlay')?.addEventListener('click', closeDrawer);
+    $('cart-modal-backdrop')?.addEventListener('click', closeModal);
+    $('cart-modal-close')?.addEventListener('click', closeModal);
     document.querySelectorAll('[data-open-cart]').forEach(el =>
-      el.addEventListener('click', openDrawer)
+      el.addEventListener('click', openModal)
     );
-    $('cart-close')?.addEventListener('click', closeDrawer);
+    $('cart-bar-checkout')?.addEventListener('click', openModal);
     $('proceed-checkout')?.addEventListener('click', openCheckout);
     $('co-back')?.addEventListener('click', closeCheckout);
     $('submit-order')?.addEventListener('click', submitOrder);
@@ -381,7 +398,7 @@
     });
   }
 
-  window.wyCart = { addItem, removeItem, updateQty, clearCart, selectBranch, openDrawer, closeDrawer };
+  window.wyCart = { addItem, removeItem, updateQty, clearCart, selectBranch, openModal, closeModal };
 
   document.readyState === 'loading'
     ? document.addEventListener('DOMContentLoaded', init)
