@@ -413,7 +413,7 @@
       el.addEventListener('click', openModal)
     );
     $('cart-bar-checkout')?.addEventListener('click', openModal);
-    $('proceed-checkout')?.addEventListener('click', openMethodPanel);
+    $('proceed-checkout')?.addEventListener('click', openCheckout);
     $('method-back')?.addEventListener('click', closeMethodPanel);
     $('method-call')?.addEventListener('click', callBranch);
     $('method-whatsapp')?.addEventListener('click', whatsappBranch);
