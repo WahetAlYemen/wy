@@ -190,8 +190,7 @@
       <div class="cart-modal-total-row">
         <span>الإجمالي</span>
         <span class="cart-modal-total-val">${tot.toLocaleString('ar-EG')} ج</span>
-      </div>
-      ${tot >= FREE_DELIVERY_MIN ? '<div class="free-del-msg">توصيل مجاني لطلبات فوق 1000 جنيه ✓</div>' : ''}`;
+      </div>`;
   }
 
   /* ============================================================
@@ -243,25 +242,11 @@
   }
 
   /* ============================================================
-     DAILY ORDER NUMBER
-  ============================================================ */
-  const ORDER_NUM_KEY = 'wy-order-num-v1';
-
-  function nextOrderNum() {
-    const today = new Date().toISOString().slice(0, 10);
-    let rec = {};
-    try { rec = JSON.parse(localStorage.getItem(ORDER_NUM_KEY)) || {}; } catch {}
-    if (rec.date !== today) rec = { date: today, seq: 9019 };
-    rec.seq += 1;
-    localStorage.setItem(ORDER_NUM_KEY, JSON.stringify(rec));
-    return rec.seq;
-  }
-
-  /* ============================================================
      TELEGRAM ORDER SUBMISSION
   ============================================================ */
-  const TG_TOKEN = '8797857878:AAHl4TKrBbynFwj9AHVj6zapFRzLYL3tgnk';
-  const TG_CHAT  = '-1003765202930';
+  const TG_TOKEN  = '8797857878:AAHl4TKrBbynFwj9AHVj6zapFRzLYL3tgnk';
+  const TG_CHAT   = '-1003765202930';
+  const TG_OFFSET = 9000;
 
   async function submitOrder() {
     const name  = $('inp-name')?.value.trim();
@@ -273,37 +258,49 @@
     if (!addr)  { $('inp-addr')?.classList.add('field-err');  ok = false; }
     if (!ok) return;
 
-    const notes   = $('inp-notes')?.value.trim() || '';
-    const br      = BRANCHES.find(b => b.id === cart.branch) || BRANCHES[0];
-    const tot     = total();
-    const orderNo = nextOrderNum();
+    const notes = $('inp-notes')?.value.trim() || '';
+    const br    = BRANCHES.find(b => b.id === cart.branch) || BRANCHES[0];
+    const tot   = total();
 
-    let msg = `🟡 *طلب جديد — واحة اليمن*\n━━━━━━━━━━━━━━\n`;
-    msg += `🔢 *رقم الطلب:* ${orderNo}\n`;
-    msg += `🏪 *الفرع:* فرع ${br.name}\n`;
-    msg += `👤 *الاسم:* ${name}\n`;
-    msg += `📞 *الهاتف:* ${phone}\n`;
-    msg += `📍 *العنوان:* ${addr}\n`;
-    msg += '━━━━━━━━━━━━━━\n🛒 *الطلب:*\n';
+    /* build message without order number first — we get it from Telegram */
+    let body = `🟡 *طلب جديد — واحة اليمن*\n━━━━━━━━━━━━━━\n`;
+    body += `🏪 *الفرع:* فرع ${br.name}\n`;
+    body += `👤 *الاسم:* ${name}\n`;
+    body += `📞 *الهاتف:* ${phone}\n`;
+    body += `📍 *العنوان:* ${addr}\n`;
+    body += '━━━━━━━━━━━━━━\n🛒 *الطلب:*\n';
     cart.items.forEach(i => {
-      msg += `• ${i.name} × ${i.qty}  —  ${(i.price * i.qty).toLocaleString('ar-EG')} ج\n`;
+      body += `• ${i.name} × ${i.qty}  —  ${(i.price * i.qty).toLocaleString('ar-EG')} ج\n`;
     });
-    msg += '━━━━━━━━━━━━━━\n';
-    msg += `💰 *الإجمالي:* ${tot.toLocaleString('ar-EG')} جنيه\n`;
-    msg += '💵 *الدفع:* كاش عند الاستلام\n';
-    if (notes) msg += `📝 *ملاحظات:* ${notes}\n`;
+    body += '━━━━━━━━━━━━━━\n';
+    body += `💰 *الإجمالي:* ${tot.toLocaleString('ar-EG')} جنيه\n`;
+    body += '💵 *الدفع:* كاش عند الاستلام\n';
+    if (notes) body += `📝 *ملاحظات:* ${notes}\n`;
 
     const btn = $('submit-order');
     if (btn) { btn.disabled = true; btn.textContent = 'جاري الإرسال...'; }
 
     try {
-      const res = await fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`, {
+      /* 1 — send message, get message_id */
+      const res  = await fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ chat_id: TG_CHAT, text: msg, parse_mode: 'Markdown' })
+        body: JSON.stringify({ chat_id: TG_CHAT, text: body, parse_mode: 'Markdown' })
       });
       const data = await res.json();
       if (!data.ok) throw new Error(data.description);
+
+      /* 2 — order number = message_id + offset (global, sequential across all devices) */
+      const msgId   = data.result.message_id;
+      const orderNo = msgId + TG_OFFSET;
+
+      /* 3 — edit the sent message to prepend the order number */
+      const fullMsg = `🔢 *رقم الطلب:* ${orderNo}\n` + body;
+      await fetch(`https://api.telegram.org/bot${TG_TOKEN}/editMessageText`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id: TG_CHAT, message_id: msgId, text: fullMsg, parse_mode: 'Markdown' })
+      });
 
       showOrderSuccess(orderNo);
 
