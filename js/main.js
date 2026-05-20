@@ -407,6 +407,7 @@ function initOrderModal() {
 
   document.getElementById('btnCallMethod').addEventListener('click', () => selectMethod('call'));
   document.getElementById('btnWhatsappMethod').addEventListener('click', () => selectMethod('whatsapp'));
+  document.getElementById('btnOnlineMethod').addEventListener('click', () => { closeModal(); window.location.href = 'menu.html'; });
   document.getElementById('orderModalBack').addEventListener('click', () => showStep(1));
 
   modal.querySelectorAll('.order-modal-close').forEach(btn => btn.addEventListener('click', closeModal));

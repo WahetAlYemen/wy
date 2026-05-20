@@ -2399,6 +2399,22 @@ body.en .about-grid { direction: ltr; }
 .order-method-icon.call-icon svg { color: var(--gold); }
 .order-method-icon.wa-icon { background: rgba(37,211,102,0.12); }
 .order-method-icon.wa-icon svg { color: #25D366; }
+.order-method-icon.online-icon { background: rgba(44,21,0,0.08); }
+.order-method-icon.online-icon svg { color: var(--brown-dark); }
+.order-method-btn-online {
+  grid-column: 1 / -1;
+  flex-direction: row;
+  justify-content: flex-start;
+  padding: 16px 20px;
+  gap: 16px;
+  background: var(--brown-dark);
+  border-color: var(--brown-dark);
+}
+.order-method-btn-online .order-method-icon.online-icon { background: rgba(255,255,255,0.1); flex-shrink: 0; }
+.order-method-btn-online .order-method-icon.online-icon svg { color: var(--gold); }
+.order-method-btn-online .order-method-label { color: #fff; text-align: start; }
+.order-method-btn-online .order-method-desc { color: rgba(255,255,255,0.65); text-align: start; }
+.order-method-btn-online:hover { border-color: var(--gold); box-shadow: 0 8px 24px rgba(44,21,0,0.25); }
 
 .order-method-label {
   display: block;
