@@ -2357,76 +2357,121 @@ body.en .about-grid { direction: ltr; }
   color: var(--brown-deep);
 }
 
-.order-modal-body { padding: 24px 24px 28px; }
+.order-modal-body { padding: 20px 20px 24px; }
 
-/* Step 1: method grid */
+/* Step 1: method list — vertical cards */
 .order-method-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .order-method-btn {
-  background: var(--cream);
-  border: 1.5px solid var(--gold-border);
-  border-radius: 16px;
-  padding: 22px 14px 18px;
-  cursor: pointer;
-  text-align: center;
-  transition: all 0.25s var(--ease-out);
-  font-family: var(--font);
+  width: 100%;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: 16px;
+  padding: 16px 18px;
+  background: #fff;
+  border: 1.5px solid #e8ddd0;
+  border-radius: 16px;
+  cursor: pointer;
+  font-family: var(--font);
+  text-align: start;
+  transition: all 0.22s var(--ease-out);
+  position: relative;
 }
 .order-method-btn:hover {
   border-color: var(--gold);
-  transform: translateY(-3px);
-  box-shadow: 0 8px 24px rgba(200,150,12,0.15);
+  box-shadow: 0 4px 20px rgba(200,150,12,0.13);
+  transform: translateY(-2px);
 }
 
+/* icon circle */
 .order-method-icon {
-  width: 52px;
-  height: 52px;
-  border-radius: 14px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 2px;
+  flex-shrink: 0;
 }
-.order-method-icon.call-icon { background: rgba(200,150,12,0.12); }
+.order-method-icon.call-icon  { background: #fdf3d9; }
 .order-method-icon.call-icon svg { color: var(--gold); }
-.order-method-icon.wa-icon { background: rgba(37,211,102,0.12); }
+.order-method-icon.wa-icon    { background: #e8f9ee; }
 .order-method-icon.wa-icon svg { color: #25D366; }
-.order-method-icon.online-icon { background: rgba(44,21,0,0.08); }
+.order-method-icon.online-icon { background: #f0ece6; }
 .order-method-icon.online-icon svg { color: var(--brown-dark); }
-.order-method-btn-online {
-  grid-column: 1 / -1;
-  flex-direction: row;
-  justify-content: flex-start;
-  padding: 16px 20px;
-  gap: 16px;
-  background: var(--brown-dark);
-  border-color: var(--brown-dark);
-}
-.order-method-btn-online .order-method-icon.online-icon { background: rgba(255,255,255,0.1); flex-shrink: 0; }
-.order-method-btn-online .order-method-icon.online-icon svg { color: var(--gold); }
-.order-method-btn-online .order-method-label { color: #fff; text-align: start; }
-.order-method-btn-online .order-method-desc { color: rgba(255,255,255,0.65); text-align: start; }
-.order-method-btn-online:hover { border-color: var(--gold); box-shadow: 0 8px 24px rgba(44,21,0,0.25); }
 
+/* text block */
+.order-method-text { flex: 1; min-width: 0; }
 .order-method-label {
   display: block;
-  font-size: 0.92rem;
+  font-size: 0.97rem;
   font-weight: 800;
   color: var(--brown-dark);
+  margin-bottom: 2px;
 }
 .order-method-desc {
   display: block;
-  font-size: 0.73rem;
-  color: var(--text-light);
-  line-height: 1.4;
+  font-size: 0.78rem;
+  color: #888;
+  line-height: 1.45;
+}
+
+/* chevron arrow */
+.order-method-arrow {
+  flex-shrink: 0;
+  color: #ccc;
+  transition: color 0.2s, transform 0.2s;
+}
+.order-method-btn:hover .order-method-arrow { color: var(--gold); transform: translateX(-3px); }
+[dir="ltr"] .order-method-btn:hover .order-method-arrow { transform: translateX(3px); }
+
+/* online button — highlighted */
+.order-method-btn-online {
+  background: var(--brown-dark);
+  border-color: var(--brown-dark);
+}
+.order-method-btn-online .order-method-icon.online-icon { background: rgba(200,150,12,0.18); }
+.order-method-btn-online .order-method-icon.online-icon svg { color: var(--gold); }
+.order-method-btn-online .order-method-label { color: #fff; }
+.order-method-btn-online .order-method-desc { color: rgba(255,255,255,0.6); }
+.order-method-btn-online .order-method-arrow { color: var(--gold); }
+.order-method-btn-online:hover { border-color: var(--gold); box-shadow: 0 6px 24px rgba(44,21,0,0.3); }
+.order-method-btn-online:hover .order-method-arrow { color: var(--gold-pale); }
+
+.order-method-online-steps {
+  display: flex;
+  gap: 6px;
+  margin-top: 7px;
+  flex-wrap: wrap;
+}
+.order-method-step {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(200,150,12,0.18);
+  border-radius: 20px;
+  padding: 2px 9px;
+  font-size: 0.7rem;
+  color: var(--gold-pale);
+  font-weight: 600;
+  white-space: nowrap;
+}
+.order-method-step-num {
+  background: var(--gold);
+  color: #fff;
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  font-size: 0.62rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  flex-shrink: 0;
 }
 
 /* Step 2: back + branch list */
