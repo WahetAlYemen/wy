@@ -12,6 +12,7 @@
   ];
   const FREE_DELIVERY_MIN = 1000;
   const STORAGE_KEY = 'wy-cart-v1';
+  const storage = sessionStorage;
 
   /* ============================================================
      STATE
@@ -20,11 +21,11 @@
   let activeBranch = BRANCHES.find(b => b.id === cart.branch) || BRANCHES[0];
 
   function readCart() {
-    try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || empty(); }
+    try { return JSON.parse(storage.getItem(STORAGE_KEY)) || empty(); }
     catch { return empty(); }
   }
   function empty() { return { branch: null, items: [] }; }
-  function save()  { localStorage.setItem(STORAGE_KEY, JSON.stringify(cart)); }
+  function save()  { storage.setItem(STORAGE_KEY, JSON.stringify(cart)); }
 
   /* ============================================================
      TOTALS
@@ -215,27 +216,45 @@
   }
 
   /* ============================================================
+     DAILY ORDER NUMBER
+  ============================================================ */
+  const ORDER_NUM_KEY = 'wy-order-num-v1';
+
+  function nextOrderNum() {
+    const today = new Date().toISOString().slice(0, 10);
+    let rec = {};
+    try { rec = JSON.parse(localStorage.getItem(ORDER_NUM_KEY)) || {}; } catch {}
+    if (rec.date !== today) rec = { date: today, seq: 0 };
+    rec.seq += 1;
+    localStorage.setItem(ORDER_NUM_KEY, JSON.stringify(rec));
+    return rec.seq;
+  }
+
+  /* ============================================================
      TELEGRAM ORDER SUBMISSION
   ============================================================ */
   const TG_TOKEN = '8797857878:AAHl4TKrBbynFwj9AHVj6zapFRzLYL3tgnk';
   const TG_CHAT  = '-1003765202930';
 
   async function submitOrder() {
+    const name  = $('inp-name')?.value.trim();
     const phone = $('inp-phone')?.value.trim();
     const addr  = $('inp-addr')?.value.trim();
     let ok = true;
+    if (!name)  { $('inp-name')?.classList.add('field-err');  ok = false; }
     if (!phone) { $('inp-phone')?.classList.add('field-err'); ok = false; }
     if (!addr)  { $('inp-addr')?.classList.add('field-err');  ok = false; }
     if (!ok) return;
 
-    const name  = $('inp-name')?.value.trim()  || '';
-    const notes = $('inp-notes')?.value.trim() || '';
-    const br    = BRANCHES.find(b => b.id === cart.branch) || BRANCHES[0];
-    const tot   = total();
+    const notes   = $('inp-notes')?.value.trim() || '';
+    const br      = BRANCHES.find(b => b.id === cart.branch) || BRANCHES[0];
+    const tot     = total();
+    const orderNo = nextOrderNum();
 
-    let msg = '🟡 *طلب جديد — واحة اليمن*\n━━━━━━━━━━━━━━\n';
+    let msg = `🟡 *طلب جديد — واحة اليمن*\n━━━━━━━━━━━━━━\n`;
+    msg += `🔢 *رقم الطلب:* ${orderNo}\n`;
     msg += `🏪 *الفرع:* فرع ${br.name}\n`;
-    if (name)  msg += `👤 *الاسم:* ${name}\n`;
+    msg += `👤 *الاسم:* ${name}\n`;
     msg += `📞 *الهاتف:* ${phone}\n`;
     msg += `📍 *العنوان:* ${addr}\n`;
     msg += '━━━━━━━━━━━━━━\n🛒 *الطلب:*\n';
@@ -259,10 +278,8 @@
       const data = await res.json();
       if (!data.ok) throw new Error(data.description);
 
-      if (btn) {
-        btn.textContent = '✓ تم إرسال طلبك بنجاح!';
-        btn.style.background = '#28a745';
-      }
+      showOrderSuccess(orderNo);
+
       setTimeout(() => {
         clearCart();
         closeModal();
@@ -270,12 +287,23 @@
           if ($(id)) $(id).value = '';
         });
         if (btn) { btn.disabled = false; btn.textContent = 'أرسل الطلب'; btn.style.background = ''; }
-      }, 2500);
+        hideOrderSuccess();
+      }, 4000);
 
     } catch (e) {
       if (btn) { btn.disabled = false; btn.textContent = 'أرسل الطلب'; }
       alert('حدث خطأ أثناء إرسال الطلب. تحقق من الاتصال وحاول مرة أخرى.');
     }
+  }
+
+  function showOrderSuccess(num) {
+    const numEl = $('order-success-num');
+    if (numEl) numEl.textContent = num;
+    $('order-success')?.classList.add('active');
+  }
+
+  function hideOrderSuccess() {
+    $('order-success')?.classList.remove('active');
   }
 
   /* ============================================================
@@ -367,7 +395,7 @@
     $('clear-cart-btn')?.addEventListener('click', () => {
       if (confirm('هل تريد مسح عربة التسوق؟')) clearCart();
     });
-    ['inp-phone', 'inp-addr'].forEach(id => {
+    ['inp-name', 'inp-phone', 'inp-addr'].forEach(id => {
       $(id)?.addEventListener('input', () => $(id)?.classList.remove('field-err'));
     });
   }

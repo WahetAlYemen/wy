@@ -3131,7 +3131,7 @@ body:not(.en) .order-modal-back svg { transform: scaleX(-1); }
 }
 #submit-order {
   width: 100%;
-  background: #25D366;
+  background: var(--gold);
   color: #fff;
   border: none;
   border-radius: 12px;
@@ -3146,8 +3146,55 @@ body:not(.en) .order-modal-back svg { transform: scaleX(-1); }
   gap: 8px;
   transition: background 0.2s, transform 0.15s;
 }
-#submit-order:hover { background: #1da851; transform: translateY(-1px); }
-#submit-order svg { width: 20px; height: 20px; flex-shrink: 0; }
+#submit-order:hover { background: #a87800; transform: translateY(-1px); }
+#submit-order:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+
+.req-star { color: #c0392b; margin-inline-start: 2px; }
+
+/* ── Order Success Panel ── */
+#order-success {
+  display: none;
+  position: absolute;
+  inset: 0;
+  background: var(--cream);
+  border-radius: 16px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 32px 24px;
+  text-align: center;
+  z-index: 10;
+}
+#order-success.active { display: flex; }
+.order-success-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #28a745;
+  color: #fff;
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 6px;
+}
+.order-success-title {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--brown-dark);
+}
+.order-success-num {
+  font-size: 0.95rem;
+  color: #555;
+  font-weight: 600;
+}
+.order-success-msg {
+  font-size: 0.9rem;
+  color: #666;
+  line-height: 1.6;
+  max-width: 260px;
+}
 
 /* ── Conflict Modal ── */
 #conflict-modal {
