@@ -251,7 +251,7 @@
     const today = new Date().toISOString().slice(0, 10);
     let rec = {};
     try { rec = JSON.parse(localStorage.getItem(ORDER_NUM_KEY)) || {}; } catch {}
-    if (rec.date !== today) rec = { date: today, seq: 0 };
+    if (rec.date !== today) rec = { date: today, seq: 9019 };
     rec.seq += 1;
     localStorage.setItem(ORDER_NUM_KEY, JSON.stringify(rec));
     return rec.seq;
