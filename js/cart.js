@@ -7,8 +7,8 @@
      DATA
   ============================================================ */
   const BRANCHES = [
-    { id: 'mohandessin',   name: 'المهندسين',   whatsapp: '201112223232' },
-    { id: 'sheikh-zayed',  name: 'الشيخ زايد',  whatsapp: '201118883232' },
+    { id: 'mohandessin',   name: 'المهندسين',   whatsapp: '201112223232', phone: '201112223232' },
+    { id: 'sheikh-zayed',  name: 'الشيخ زايد',  whatsapp: '201118883232', phone: '201118883232' },
   ];
   const FREE_DELIVERY_MIN = 1000;
   const STORAGE_KEY = 'wy-cart-v1';
@@ -136,6 +136,7 @@
   function openModal() {
     if (!cart.items.length) return;
     closeCheckout();
+    closeMethodPanel();
     buildModalCart();
     $('cart-modal')?.classList.add('open');
     document.body.style.overflow = 'hidden';
@@ -144,6 +145,7 @@
   function closeModal() {
     $('cart-modal')?.classList.remove('open');
     document.body.style.overflow = '';
+    closeMethodPanel();
     closeCheckout();
   }
 
@@ -190,6 +192,31 @@
         <span class="cart-modal-total-val">${tot.toLocaleString('ar-EG')} ج</span>
       </div>
       ${tot >= FREE_DELIVERY_MIN ? '<div class="free-del-msg">توصيل مجاني لطلبات فوق 1000 جنيه ✓</div>' : ''}`;
+  }
+
+  /* ============================================================
+     METHOD PANEL (how to order)
+  ============================================================ */
+  function openMethodPanel() {
+    $('method-panel')?.classList.add('open');
+  }
+  function closeMethodPanel() {
+    $('method-panel')?.classList.remove('open');
+  }
+
+  function callBranch() {
+    const br = BRANCHES.find(b => b.id === cart.branch) || BRANCHES[0];
+    window.location.href = `tel:+${br.phone}`;
+  }
+
+  function whatsappBranch() {
+    const br = BRANCHES.find(b => b.id === cart.branch) || BRANCHES[0];
+    let msg = `مرحباً 👋 أريد الطلب من فرع ${br.name}:\n\n`;
+    cart.items.forEach(i => {
+      msg += `• ${i.name} × ${i.qty} — ${(i.price * i.qty).toLocaleString('ar-EG')} ج\n`;
+    });
+    msg += `\n💰 الإجمالي: ${total().toLocaleString('ar-EG')} ج`;
+    window.open(`https://wa.me/${br.whatsapp}?text=${encodeURIComponent(msg)}`, '_blank');
   }
 
   /* ============================================================
@@ -389,7 +416,11 @@
       el.addEventListener('click', openModal)
     );
     $('cart-bar-checkout')?.addEventListener('click', openModal);
-    $('proceed-checkout')?.addEventListener('click', openCheckout);
+    $('proceed-checkout')?.addEventListener('click', openMethodPanel);
+    $('method-back')?.addEventListener('click', closeMethodPanel);
+    $('method-call')?.addEventListener('click', callBranch);
+    $('method-whatsapp')?.addEventListener('click', whatsappBranch);
+    $('method-online')?.addEventListener('click', openCheckout);
     $('co-back')?.addEventListener('click', closeCheckout);
     $('submit-order')?.addEventListener('click', submitOrder);
     $('clear-cart-btn')?.addEventListener('click', () => {
